@@ -7,9 +7,10 @@ interface UserAttributes {
     display_name: string;
     email: string;
     password: string;
-    created_at: Date;
-    updated_at: Date;
     auth_level: number;
+    created_at?: Date;
+    updated_at?: Date;
+    avatar_url?: string;
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
@@ -23,6 +24,7 @@ export class Users extends Model<UserAttributes, UserCreationAttributes> impleme
     public created_at!: Date;
     public updated_at!: Date;
     public auth_level!: number;
+    public avatar_url!: string;
 }
 
 export function UserFactory(sequelize: Sequelize): typeof Users {
@@ -65,6 +67,10 @@ export function UserFactory(sequelize: Sequelize): typeof Users {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 defaultValue: 1,
+            },
+            avatar_url: {
+                type: DataTypes.STRING,
+                allowNull: true,
             },
         },
         {
