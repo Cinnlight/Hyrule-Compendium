@@ -12,6 +12,7 @@
   :root {
     --background: #F4EDF0;
     --foreground: #07040D;
+    --background-gradient: radial-gradient(circle at 33% 0, rgb(247, 159, 181), transparent 40%), radial-gradient( circle at 50% 3rem, rgb(226, 90, 226), transparent 50%), radial-gradient(circle at 66% 0, skyblue, transparent 40%);
   }
 }
 
