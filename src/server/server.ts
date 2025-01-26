@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 
 // initializeDatabase contains all seed functions and the sequelize.sync() function
-import { initializeDatabase } from './db/database.js';
+// import { initializeDatabase } from './db/database.js';
 
 dotenv.config();
 

@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --loader ts-node/esm server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js"
+    "seed": "",
+    "build": "npx tsc",
+    "start": "npm run build && node dist/server.js --ignore client",
+    "dev": "node --loader ts-node/esm server.ts"
   },
   "keywords": [],
   "author": "",
