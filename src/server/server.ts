@@ -1,11 +1,16 @@
 import express from 'express';
 import { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
-
-// initializeDatabase contains all seed functions and the sequelize.sync() function
-// import { initializeDatabase } from './db/database.js';
-
 dotenv.config();
+
+// Global handler for unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1);
+});
+
+// Initialize database
+import { initializeDatabase } from './db/database.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -25,7 +30,7 @@ app.get('/api/test', (req: Request, res: Response) => {
   res.json({ message: 'API is working!' });
 });
 
-// TODO: Initialize database and start the server - currently not working - issue with run dev script and expemental loader
+// Initialize database and start the server
 // initializeDatabase()
 //   .then(() => {
 //     app.listen(PORT, () => {
@@ -33,8 +38,8 @@ app.get('/api/test', (req: Request, res: Response) => {
 //     });
 //   })
 //   .catch((err) => {
-//     console.error("Failed to initialize database. Server not started.", err);
-//     process.exit(1); // Exit the process with failure
+//     console.error('Failed to initialize database. Server not started.', err);
+//     process.exit(1); // Exit the process on failure
 //   });
 
 app.listen(PORT, () => {
@@ -42,3 +47,4 @@ app.listen(PORT, () => {
 });
 
 export default app;
+
