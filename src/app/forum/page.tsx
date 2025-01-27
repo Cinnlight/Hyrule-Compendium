@@ -1,0 +1,1 @@
+// app/forum/page.tsx

@@ -1,3 +1,4 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Roboto, Roboto_Slab, Smooch_Sans, Fira_Code } from 'next/font/google';
 import "./ui/globals.css";
