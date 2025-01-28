@@ -3,6 +3,7 @@ dotenv.config();
 import express from 'express';
 import { Request, Response, NextFunction } from 'express';
 import { EmailService, EmailVerificationResult } from './src/services/noReplyEmail.js';
+import { Users } from './src/models/users.js';
 
 // Global handler for unhandled promise rejections
 process.on('unhandledRejection', (reason, promise) => {
@@ -37,7 +38,7 @@ app.get('/api/test', (req: Request, res: Response) => {
   res.json({ message: 'API is working!' });
 });
 
-app.post('/api/verify-email', async (req: Request, res: Response) => {
+app.post('/api/email-verification', async (req: Request, res: Response) => {
   try {
     const result: EmailVerificationResult = await emailService.sendEmailVerification(req.body);
     if (result.success) {
@@ -49,6 +50,43 @@ app.post('/api/verify-email', async (req: Request, res: Response) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
+// app.get('/api/verify-email', async (req: Request, res: Response) => {
+//   const { token, email } = req.query;
+
+//   if (!token || !email || typeof token !== 'string' || typeof email !== 'string') {
+//     return res.status(400).json({ success: false, message: 'Missing or invalid token or email' });
+//   }
+
+//   try {
+//     // Find the user in database
+//     const user = await Users.findOne({ where: { email } });
+
+//     if (!user) {
+//       return res.status(404).json({ success: false, message: 'User not found' });
+//     }
+
+//     // Verify token matches
+//     if (user.email_val_key !== token) {
+//       return res.status(400).json({ success: false, message: 'Invalid verification token' });
+//     }
+
+//     // Update email validation status
+//     await user.update({
+//       email_val: true,
+//       email_val_key: null // Clear the verification token
+//     });
+
+//     return res.json({ 
+//       success: true, 
+//       message: 'Email verified successfully' 
+//     });
+
+//   } catch (error: any) {
+//     console.error('Email verification error:', error);
+//     res.status(500).json({ success: false, error: error.message });
+//   }
+// });
 
 // Initialize database and start the server
 initializeDatabase()
