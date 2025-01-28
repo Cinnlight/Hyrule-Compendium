@@ -29,7 +29,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 // Routes
-import commentRoutes from './src/routes/comments.js';
+import commentRoutes from './src/routes/api/comments.js';
 
 app.use('/api/comments', commentRoutes);
 
