@@ -18,7 +18,7 @@ export default function Nav() {
                 </li>
                 <li>
                     <Link
-                        href="/"
+                        href="/compendium"
                     >
                         <span className="material-icons-round">
                             travel_explore
@@ -28,7 +28,7 @@ export default function Nav() {
                 </li>
                 <li>
                     <Link
-                        href="/"
+                        href="/forum"
                     >
                         <span className="material-icons-round">
                             forum
