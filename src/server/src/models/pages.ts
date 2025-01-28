@@ -13,12 +13,12 @@ interface PageAttributes {
 interface PageCreationAttributes extends Optional<PageAttributes, "id"> {}
 
 export class Pages extends Model<PageAttributes, PageCreationAttributes> implements PageAttributes {
-    public id!: number;
-    public title!: string;
-    public slug!: string;
-    public created_by!: number;
-    public created_at!: Date;
-    public updated_at!: Date;
+    declare id: number;
+    declare title: string;
+    declare slug: string;
+    declare created_by: number;
+    declare created_at: Date;
+    declare updated_at: Date;
 }
 
 export function PageFactory(sequelize: Sequelize): typeof Pages {

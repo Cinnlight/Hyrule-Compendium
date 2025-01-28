@@ -8,9 +8,9 @@ interface PageCategoryAttributes {
 }
 
 export class PageCategories extends Model<PageCategoryAttributes> implements PageCategoryAttributes {
-    public page_id!: number;
-    public category_id!: number;
-    public key?: string[];
+    declare page_id: number;
+    declare category_id: number;
+    declare key?: string[];
 }
 
 export function PageCategoryFactory(sequelize: Sequelize): typeof PageCategories {

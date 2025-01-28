@@ -1,7 +1,9 @@
-import express from 'express';
-import { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
+import express from 'express';
+import { Request, Response, NextFunction } from 'express';
+import routes from './src/routes/index.js';
+
 
 // Global handler for unhandled promise rejections
 process.on('unhandledRejection', (reason, promise) => {
@@ -25,10 +27,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send('Something broke!');
 });
 
-// Test route
-app.get('/api/test', (req: Request, res: Response) => {
-  res.json({ message: 'API is working!' });
-});
+// Routes
+app.use('/', routes);
 
 // Initialize database and start the server
 initializeDatabase()
@@ -41,6 +41,5 @@ initializeDatabase()
     console.error('Failed to initialize database. Server not started.', err);
     process.exit(1); // Exit the process on failure
   });
-  
-export default app;
 
+export default app;

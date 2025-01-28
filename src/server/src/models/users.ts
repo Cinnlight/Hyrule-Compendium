@@ -16,15 +16,15 @@ interface UserAttributes {
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
 
 export class Users extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-    public id!: number;
-    public login!: string;
-    public display_name!: string;
-    public email!: string;
-    public password!: string;
-    public created_at!: Date;
-    public updated_at!: Date;
-    public auth_level!: number;
-    public avatar_url!: string;
+    declare id: number;
+    declare login: string;
+    declare display_name: string;
+    declare email: string;
+    declare password: string;
+    declare created_at: Date;
+    declare updated_at: Date;
+    declare auth_level: number;
+    declare avatar_url: string;
 }
 
 export function UserFactory(sequelize: Sequelize): typeof Users {
