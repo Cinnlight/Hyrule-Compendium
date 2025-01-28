@@ -2,38 +2,32 @@ import { Sequelize, Model, DataTypes } from "sequelize";
 
 // Define attributes for the Category
 interface CategoryAttributes {
-    page_id: number;
-    category_id: number;
-    key: string[];
+    id: number;
+    name: string;
 }
 
 export class Categories extends Model<CategoryAttributes> implements CategoryAttributes {
-    public page_id!: number;
-    public category_id!: number;
-    public key!: string[];
+    public id!: number;
+    public name!: string;
 }
 
 export function CategoryFactory(sequelize: Sequelize): typeof Categories {
     Categories.init(
         {
-            page_id: {
+            id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true,
             },
-            category_id: {
-                type: DataTypes.INTEGER,
+            name: {
+                type: DataTypes.STRING,
                 allowNull: false,
                 primaryKey: true,
-            },
-            key: {
-                type: DataTypes.ARRAY(DataTypes.TEXT),
-                allowNull: false,
             },
         },
         {
             modelName: "Categories",
-            tableName: "Page Categories",
+            tableName: "Categories",
             timestamps: false,
             sequelize,
         }
