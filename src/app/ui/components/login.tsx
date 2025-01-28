@@ -1,4 +1,5 @@
 // login component
+'use client';
 
 import { useState } from 'react';
 
@@ -42,14 +43,14 @@ const Login: React.FC = () => {
             <h1>Login</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
-                <div className={/*TBD*/}>
-                    <label htmlFor="email" className={/*TBD*/}>
+                <div className="login">
+                    <label htmlFor="email" className="loginlabel">
                         Email:
                     </label>
                     <input
                         type="email"
                         id="email"
-                        className={/*TBD*/}
+                        className="loginemail"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your email"
@@ -58,13 +59,13 @@ const Login: React.FC = () => {
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="password" className={/*TBD*/}>
+                    <label htmlFor="password" className="loginlabel">
                         Password:
                     </label>
                     <input
                         type="password"
                         id="password"
-                        className={/*TBD*/}
+                        className="loginpassword"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter your password"
@@ -72,7 +73,7 @@ const Login: React.FC = () => {
                     />
                 </div>
 
-                <button type="submit" className={/*TBD*/} >Login</button>
+                <button type="submit" className="loginbutton" >Login</button>
             </form>
         </div>
     );
