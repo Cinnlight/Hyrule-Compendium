@@ -2,17 +2,17 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Import and initialize models and associations
-import "../src/models";
+import "../src/models/index.js";
 
 import { Sequelize } from "sequelize";
 import { sequelize } from "../src/models/index.js"; // Import the Sequelize instance from models/index.ts
 
-import * as usersSeed from "../sequelize_seeds/usersSeed.js";
-import * as reactionsSeed from "../sequelize_seeds/reactionsSeed.js";
-import * as categoriesSeed from "../sequelize_seeds/categoriesSeed.js";
-import * as pagesSeed from "../sequelize_seeds/pagesSeed.js";
-import * as contentSeed from "../sequelize_seeds/contentSeed.js";
-import * as commentsSeed from "../sequelize_seeds/commentsSeed.js";
+import * as usersSeed from "../src/sequelize_seeds/usersSeed.js";
+import * as reactionsSeed from "../src/sequelize_seeds/reactionsSeed.js";
+import * as categoriesSeed from "../src/sequelize_seeds/categoriesSeed.js";
+import * as pagesSeed from "../src/sequelize_seeds/pagesSeed.js";
+import * as contentSeed from "../src/sequelize_seeds/contentSeed.js";
+import * as commentsSeed from "../src/sequelize_seeds/commentsSeed.js";
 
 const adminSequelize = new Sequelize(
   "postgres",
@@ -25,7 +25,8 @@ const adminSequelize = new Sequelize(
   }
 );
 
-export async function initializeDatabase() {
+// TODO: Change to use environment variable for reseed flag
+export async function initializeDatabase(reseed: boolean = true) {
   const dbName = process.env.DB_NAME || "hyrule_db";
 
   try {
@@ -50,8 +51,13 @@ export async function initializeDatabase() {
 
     // Sync models
     console.log("Synchronizing models...");
-    await sequelize.sync({ alter: true });
-    console.log("All models synchronized.");
+    if (reseed) {
+      await sequelize.sync({ force: true });
+      console.log("All tables dropped and recreated.");
+    } else {
+      await sequelize.sync({ alter: true });
+      console.log("All models synchronized.");
+    }
 
     // Seed data
     console.log("Starting seeding process...");
