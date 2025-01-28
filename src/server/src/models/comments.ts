@@ -13,12 +13,12 @@ interface CommentAttributes {
 interface CommentCreationAttributes extends Optional<CommentAttributes, "id"> {}
 
 export class Comments extends Model<CommentAttributes, CommentCreationAttributes> implements CommentAttributes {
-    public id!: number;
-    public page_id!: number;
-    public user_id!: number;
-    public comment!: string;
-    public created_at!: Date;
-    public updated_at!: Date;
+    declare id: number;
+    declare page_id: number;
+    declare user_id: number;
+    declare comment: string;
+    declare created_at: Date;
+    declare updated_at: Date;
 }
 
 export function CommentFactory(sequelize: Sequelize): typeof Comments {

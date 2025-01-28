@@ -13,11 +13,11 @@ interface ReactionAttributes {
 interface ReactionCreationAttributes extends Optional<ReactionAttributes, "id"> {}
 
 export class Reactions extends Model<ReactionAttributes, ReactionCreationAttributes> implements ReactionAttributes {
-    public id!: number;
-    public comment_id!: number;
-    public reaction_id!: number;
-    public emoji_url!: string;
-    public count?: number;
+    declare id: number;
+    declare comment_id: number;
+    declare reaction_id: number;
+    declare emoji_url: string;
+    declare count?: number;
 }
 
 export function ReactionFactory(sequelize: Sequelize): typeof Reactions {

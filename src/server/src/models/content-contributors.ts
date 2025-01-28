@@ -9,8 +9,8 @@ interface ContentContributorsAttributes {
 interface ContentContributorsCreationAttributes extends Optional<ContentContributorsAttributes, "user_id" | "content_id"> {}
 
 export class ContentContributors extends Model<ContentContributorsAttributes, ContentContributorsCreationAttributes> implements ContentContributorsAttributes {
-    public user_id!: number;
-    public content_id!: number;
+    declare user_id: number;
+    declare content_id: number;
 }
 
 export function ContentContributorsFactory(sequelize: Sequelize): typeof ContentContributors {

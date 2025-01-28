@@ -9,7 +9,6 @@ interface ContentAttributes {
     created_by?: number;
     created_at?: Date;
     updated_at?: Date;
-    content_id?: number;
     verified_at?: Date;
     verified_by?: number;
 }
@@ -17,16 +16,15 @@ interface ContentAttributes {
 interface ContentCreationAttributes extends Optional<ContentAttributes, "id"> {}
 
 export class Content extends Model<ContentAttributes, ContentCreationAttributes> implements ContentAttributes {
-    public id!: number;
-    public page_id!: number;
-    public content!: string;
-    public version!: number;
-    public created_by!: number;
-    public created_at!: Date;
-    public updated_at!: Date;
-    public content_id!: number;
-    public verified_at!: Date;
-    public verified_by!: number;
+    declare id: number;
+    declare page_id: number;
+    declare content: string;
+    declare version: number;
+    declare created_by: number;
+    declare created_at: Date;
+    declare updated_at: Date;
+    declare verified_at: Date;
+    declare verified_by: number;
 }
 
 export function ContentFactory(sequelize: Sequelize): typeof Content {
@@ -60,9 +58,6 @@ export function ContentFactory(sequelize: Sequelize): typeof Content {
             updated_at: {
                 type: DataTypes.DATE,
                 defaultValue: DataTypes.NOW,
-            },
-            content_id: {
-                type: DataTypes.INTEGER,
             },
             verified_at: {
                 type: DataTypes.DATE,
