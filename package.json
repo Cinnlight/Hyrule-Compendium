@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "material-icons": "^1.13.13",
     "next": "15.1.6",
     "nodemon": "^3.1.9",
     "react": "^19.0.0",
