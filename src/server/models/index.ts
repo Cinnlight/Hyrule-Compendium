@@ -4,13 +4,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Import factory functions
-import { Categories, CategoryFactory } from './categories';
-import { Comments, CommentFactory } from './comments';
-import { Content, ContentFactory } from './content';
-import { PageCategories, PageCategoryFactory } from './page-categories';
-import { Pages, PageFactory } from './pages';
-import { Users, UserFactory } from './users';
-import { Reactions, ReactionFactory } from './reactions';
+import { Categories, CategoryFactory } from './categories.js';
+import { Comments, CommentFactory } from './comments.js';
+import { Content, ContentFactory } from './content.js';
+import { PageCategories, PageCategoryFactory } from './page-categories.js';
+import { Pages, PageFactory } from './pages.js';
+import { Users, UserFactory } from './users.js';
+import { Reactions, ReactionFactory } from './reactions.js';
 
 // Initialize Sequelize instance
 const sequelize = process.env.DB_URL
