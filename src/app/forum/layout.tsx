@@ -1,1 +1,0 @@
-// app/forum/layout.tsx
