@@ -1,7 +1,8 @@
-import express from 'express';
-import { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
+import express from 'express';
+import { Request, Response, NextFunction } from 'express';
+import { EmailService, EmailVerificationResult } from './src/services/noReplyEmail.js';
 
 // Global handler for unhandled promise rejections
 process.on('unhandledRejection', (reason, promise) => {
@@ -14,6 +15,7 @@ import { initializeDatabase } from './db/database.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const emailService = new EmailService();
 
 // Middleware
 app.use(express.json());
@@ -35,6 +37,19 @@ app.get('/api/test', (req: Request, res: Response) => {
   res.json({ message: 'API is working!' });
 });
 
+app.post('/api/verify-email', async (req: Request, res: Response) => {
+  try {
+    const result: EmailVerificationResult = await emailService.sendEmailVerification(req.body);
+    if (result.success) {
+      res.json(result);
+    } else {
+      res.status(500).json(result);
+    }
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Initialize database and start the server
 initializeDatabase()
   .then(() => {
@@ -48,4 +63,3 @@ initializeDatabase()
   });
 
 export default app;
-
