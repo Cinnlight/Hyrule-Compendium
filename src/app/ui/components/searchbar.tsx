@@ -8,9 +8,9 @@ export default function Search() {
                 placeholder="Search"
             />
             <button id="navSearchButton">
-            <span className="material-icons-round">
-                search
-            </span>
+                <span className="material-icons-round">
+                    search
+                </span>
             </button>
         </li>
     )
