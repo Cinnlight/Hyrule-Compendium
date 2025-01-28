@@ -9,7 +9,7 @@ interface ContentAttributes {
     created_by?: number;
     created_at?: Date;
     updated_at?: Date;
-    contributors?: number[];
+    content_id?: number;
     verified_at?: Date;
     verified_by?: number;
 }
@@ -24,7 +24,7 @@ export class Content extends Model<ContentAttributes, ContentCreationAttributes>
     public created_by!: number;
     public created_at!: Date;
     public updated_at!: Date;
-    public contributors!: number[];
+    public content_id!: number;
     public verified_at!: Date;
     public verified_by!: number;
 }
@@ -61,8 +61,8 @@ export function ContentFactory(sequelize: Sequelize): typeof Content {
                 type: DataTypes.DATE,
                 defaultValue: DataTypes.NOW,
             },
-            contributors: {
-                type: DataTypes.ARRAY(DataTypes.INTEGER),
+            content_id: {
+                type: DataTypes.INTEGER,
             },
             verified_at: {
                 type: DataTypes.DATE,
