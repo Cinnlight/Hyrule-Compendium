@@ -5,26 +5,47 @@ export default function Nav() {
     return (
         <nav>
             <ul>
+                <Search />
                 <li>
                     <Link
                         href="/"
                     >
+                        <span className="material-icons-round">
+                            home
+                        </span>
                         Home
                     </Link>
                 </li>
                 <li>
-                    Compendium
+                    <Link
+                        href="/"
+                    >
+                        <span className="material-icons-round">
+                            travel_explore
+                        </span>
+                        Compendium
+                    </Link>
                 </li>
                 <li>
-                    Bestiary
+                    <Link
+                        href="/"
+                    >
+                        <span className="material-icons-round">
+                            forum
+                        </span>
+                        Forum
+                    </Link>
                 </li>
                 <li>
-                    Map
+                    <Link
+                        href="/profile"
+                    >
+                        <span className="material-icons-round">
+                            settings
+                        </span>
+                        Profile
+                    </Link>
                 </li>
-                <li>
-                    Settings
-                </li>
-                <Search />
             </ul>
         </nav>
     )
