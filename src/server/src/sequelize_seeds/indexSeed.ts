@@ -14,7 +14,7 @@ export async function up(queryInterface: QueryInterface) {
         { id: 3, login: 'janedoe', display_name: 'Jane Doe', email: 'jane@example.com', password: 'hashed_password_here', avatar_url: 'https://example.com/avatars/jane.png', created_at: new Date() }
     ]);
 
-    await queryInterface.bulkInsert("Categories", [
+    await queryInterface.bulkInsert("Page Categories", [
         { id: 1, name: 'Technology' },
         { id: 2, name: 'Science' },
         { id: 3, name: 'History' },
