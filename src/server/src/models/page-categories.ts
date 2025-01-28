@@ -4,13 +4,13 @@ import { Sequelize, Model, DataTypes } from "sequelize";
 interface PageCategoryAttributes {
     page_id: number;
     category_id: number;
-    key: string[];
+    key?: string[];
 }
 
 export class PageCategories extends Model<PageCategoryAttributes> implements PageCategoryAttributes {
     public page_id!: number;
     public category_id!: number;
-    public key!: string[];
+    public key?: string[];
 }
 
 export function PageCategoryFactory(sequelize: Sequelize): typeof PageCategories {
@@ -28,7 +28,7 @@ export function PageCategoryFactory(sequelize: Sequelize): typeof PageCategories
             },
             key: {
                 type: DataTypes.ARRAY(DataTypes.TEXT),
-                allowNull: false,
+                allowNull: true,
             },
         },
         {

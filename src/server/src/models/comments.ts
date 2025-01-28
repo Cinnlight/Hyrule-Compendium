@@ -8,7 +8,6 @@ interface CommentAttributes {
     comment: string;
     created_at: Date;
     updated_at: Date;
-    reactions: object;
 }
 
 interface CommentCreationAttributes extends Optional<CommentAttributes, "id"> {}
@@ -20,7 +19,6 @@ export class Comments extends Model<CommentAttributes, CommentCreationAttributes
     public comment!: string;
     public created_at!: Date;
     public updated_at!: Date;
-    public reactions!: object;
 }
 
 export function CommentFactory(sequelize: Sequelize): typeof Comments {
@@ -48,9 +46,6 @@ export function CommentFactory(sequelize: Sequelize): typeof Comments {
             updated_at: {
                 type: DataTypes.DATE,
                 defaultValue: new Date(),
-            },
-            reactions: {
-                type: DataTypes.JSON,
             },
         },
         {
