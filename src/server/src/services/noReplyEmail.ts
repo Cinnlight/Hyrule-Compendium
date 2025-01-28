@@ -1,66 +1,74 @@
 import nodemailer from 'nodemailer';
+import crypto from 'crypto';
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD
-  }
-});
+interface UserData {
+  display_name: string;
+  email: string;
+  email_val?: string;
+}
 
-// TODO: When a user registers, generate a random string, save it in the database, and send it to the user's email
-// User data should be an object with the following properties: display_name, email
-const sendEmailVerification = async (userData) => {
-  try {
-    const response = await fetch('/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData)
-    });
-    
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error);
-    return data;
-  } catch (error: any) {
-    return { success: false, error: error.message };
-  }
-};
+export interface EmailVerificationResult {
+  success: boolean;
+  message?: string;
+  error?: string;
+}
 
-export default sendEmail;
+export class EmailService {
+  private transporter: nodemailer.Transporter;
 
-
-
-
-
-// TODO: Move this to the routes
-post('/api/contact', async (req, res) => {
-  try {
-    await transporter.verify();
-
-    const { display_name, email } = req.body;
-
-    const info = await transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to: email,
-      subject: `{display_name} ZOne Email Verification`,
-      html: `
-        // TODO: Take a random generated string, save it in the database, and send it to the user's email
-      `
-    });
-
-    res.json({ success: true, messageId: info.messageId });
-  } catch (error: any) {
-    res.status(500).json({ 
-      success: false, 
-      error: error.message,
-      details: {
-        code: error.code,
-        response: error.response
+  constructor() {
+    this.transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD
       }
     });
   }
-});
+
+  private generateValidationToken(): string {
+    return crypto.randomBytes(32).toString('hex');
+  }
+
+  async sendEmailVerification(userData: UserData): Promise<EmailVerificationResult> {
+    try {
+      await this.transporter.verify();
+      
+      const validationToken = this.generateValidationToken();
+      
+      const appUrl = process.env.NODE_ENV === 'production' ? process.env.APP_URL : 'http://localhost:3001';
+      const info = await this.transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: userData.email,
+        subject: `${userData.display_name} ZOne Email Verification`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h1>Welcome to ZOne, ${userData.display_name}!</h1>
+        <p>Please verify your email by clicking the link below:</p>
+        <a href="${appUrl}/verify-email?token=${validationToken}" 
+           style="display: inline-block; 
+              padding: 10px 20px; 
+              background-color: #007bff; 
+              color: white; 
+              text-decoration: none; 
+              border-radius: 5px;">
+          Verify Email
+        </a>
+          </div>
+        `
+      });
+      
+      return {
+        success: true,
+        message: 'Email sent successfully'
+      };
+    } catch {
+      return {
+        success: false,
+        error: 'Failed to send email'
+      };
+    }
+  }
+}
