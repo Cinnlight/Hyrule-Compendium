@@ -31,20 +31,16 @@ app.get('/api/test', (req: Request, res: Response) => {
 });
 
 // Initialize database and start the server
-// initializeDatabase()
-//   .then(() => {
-//     app.listen(PORT, () => {
-//       console.log(`Server running on port ${PORT}`);
-//     });
-//   })
-//   .catch((err) => {
-//     console.error('Failed to initialize database. Server not started.', err);
-//     process.exit(1); // Exit the process on failure
-//   });
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
+initializeDatabase()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Failed to initialize database. Server not started.', err);
+    process.exit(1); // Exit the process on failure
+  });
+  
 export default app;
 
