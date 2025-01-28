@@ -1,15 +1,14 @@
 :root {
   --background: #342E37;
   --foreground: #F4EDF0;
+  --translucent-white: rgba(255, 255, 255, 0.05);
+  --translucent-gray: rgba(125, 125, 125, 0.05);
+  --translucent-black: rgba(0, 0, 0, 0.05);
   --background-gradient: radial-gradient(circle at 33% 0, #6B1D5F, transparent 40%), radial-gradient( circle at 50% 3rem, #40226d, transparent 50%), radial-gradient(circle at 66% 0, #630FBD, transparent 40%);
   --font-sans: 'Roboto', sans-serif;
   --font-serif: 'Roboto Slab', serif;
   --font-accent: 'Smooch Sans', sans-serif;
   --font-monospace: 'Fira Code', monospace;
-}
-
-*{
-  box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: light) {
@@ -23,7 +22,6 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
 }
 
 body {
@@ -43,6 +41,55 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+nav {
+  position:sticky;
+  top:0;
+  right:0;
+  width:100%;
+  padding: 1rem 2rem;
+  background:var(--translucent-white);
+  backdrop-filter: blur(10px);
+
+  ul {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type:none;
+
+    li {
+      margin: 0;
+      padding:0;
+      font: 1.25rem var(--font-accent);
+      letter-spacing:0.1rem;
+    }
+
+    #searchBar {
+      display:flex;
+      align-items:center;
+    }
+  }
+  
+  #navSearch {
+    background: var(--translucent-white);
+    border: none;
+    border-radius: 0.5rem;
+    padding:10px;
+    font: 0.8rem var(--font-monospace);
+    color:var(--foreground);
+    height:37px;
+  }
+  
+  #navSearch::placeholder {
+    color: var(--foreground);
+  }
+
+  #navSearchButton {
+    background:0;
+    border:none;
+    color:var(--foreground);
+  }
 }
 
 @media (prefers-color-scheme: light) {
