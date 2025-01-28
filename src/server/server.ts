@@ -25,6 +25,11 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send('Something broke!');
 });
 
+// Routes
+import commentRoutes from './src/routes/comments.js';
+
+app.use('/api/comments', commentRoutes);
+
 // Test route
 app.get('/api/test', (req: Request, res: Response) => {
   res.json({ message: 'API is working!' });
@@ -41,6 +46,6 @@ initializeDatabase()
     console.error('Failed to initialize database. Server not started.', err);
     process.exit(1); // Exit the process on failure
   });
-  
+
 export default app;
 

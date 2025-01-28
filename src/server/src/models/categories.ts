@@ -7,8 +7,8 @@ interface CategoryAttributes {
 }
 
 export class Categories extends Model<CategoryAttributes> implements CategoryAttributes {
-    public id!: number;
-    public name!: string;
+    declare id: number;
+    declare name: string;
 }
 
 export function CategoryFactory(sequelize: Sequelize): typeof Categories {
