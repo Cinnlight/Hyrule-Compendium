@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import EmailController from './emailController.js';
 import { Users } from '../models/index.js';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 class AuthController {
     private emailController: EmailController;
@@ -70,20 +71,21 @@ class AuthController {
             // Check if user exists
             const user = await Users.findOne({ where: { login } });
             if (!user) {
-            res.status(404).json({ error: 'User not found' });
-            return;
+                res.status(404).json({ error: 'User not found' });
+                return;
             }
 
             // Compare password
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-            res.status(401).json({ error: 'Invalid credentials' });
-            return;
+                res.status(401).json({ error: 'Invalid credentials' });
+                return;
             }
 
-            // TODO: Generate and return a token (e.g., JWT)
+            // Generate and return a token (e.g., JWT)
+            const token = jwt.sign({ id: user.id, login: user.login }, process.env.JWT_SECRET!, { expiresIn: '30d' });
 
-            res.status(200).json({ message: 'Login successful' });
+            res.status(200).json({ message: 'Login successful', token });
         } catch (error) {
             res.status(400).json({ error: 'Login failed' });
         }
@@ -92,7 +94,7 @@ class AuthController {
 
     logout = async (req: Request, res: Response): Promise<void> => {
         // Invalidate the user's session or token
-        // TODO: Implement token invalidation logic
+        // Since JWTs are stateless, you can handle this on the client side by simply deleting the token
 
         res.status(200).json({ message: 'Logout successful' });
         return;
