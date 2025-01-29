@@ -4,20 +4,16 @@ import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 // Define attributes for the Reaction
 interface ReactionAttributes {
     id: number;
-    comment_id: number;
     reaction_id: number;
     emoji_url: string;
-    count?: number;
 }
 
 interface ReactionCreationAttributes extends Optional<ReactionAttributes, "id"> {}
 
 export class Reactions extends Model<ReactionAttributes, ReactionCreationAttributes> implements ReactionAttributes {
     declare id: number;
-    declare comment_id: number;
     declare reaction_id: number;
     declare emoji_url: string;
-    declare count?: number;
 }
 
 export function ReactionFactory(sequelize: Sequelize): typeof Reactions {
@@ -28,10 +24,6 @@ export function ReactionFactory(sequelize: Sequelize): typeof Reactions {
                 primaryKey: true,
                 autoIncrement: true,
             },
-            comment_id: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            },
             reaction_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -40,10 +32,6 @@ export function ReactionFactory(sequelize: Sequelize): typeof Reactions {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            count: {
-                type: DataTypes.INTEGER,
-                defaultValue: 0,
-            }
         },
         {
             modelName: "Reactions",
