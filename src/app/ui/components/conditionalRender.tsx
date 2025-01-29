@@ -1,4 +1,4 @@
-// ui/components/conditionalRendering.tsx
+// ui/components/conditionalRender.tsx
 
 import Auth from "./auth";
 
