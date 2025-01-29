@@ -4,6 +4,9 @@
   --translucent-white: rgba(255, 255, 255, 0.05);
   --translucent-gray: rgba(125, 125, 125, 0.05);
   --translucent-black: rgba(0, 0, 0, 0.05);
+  --pink:#6B1D5F;
+  --purple:#40226D;
+  --blurple:#630FBD;
   --background-gradient: radial-gradient(circle at 33% 0, #6B1D5F, transparent 40%), radial-gradient( circle at 50% 3rem, #40226d, transparent 50%), radial-gradient(circle at 66% 0, #630FBD, transparent 40%);
   --font-sans: 'Roboto', sans-serif;
   --font-serif: 'Roboto Slab', serif;
@@ -69,10 +72,20 @@ nav {
         display:flex;
         justify-content:space-between;
         align-items:center;
+        transition-duration:0.5s;
+        font-weight:300;
 
         span {
           margin-right:0.5rem;
         }
+      }
+
+      a:hover {
+        text-shadow:
+                     0 0 0.8rem var(--blurple),
+                     0 0 0.2rem var(--foreground),
+                     0 0 0.5rem var(--foreground),
+                     0 0 0.6rem var(--foreground);
       }
     }
 
