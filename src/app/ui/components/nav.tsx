@@ -3,10 +3,8 @@
 import Link from 'next/link';
 import Search from './searchbar';
 import ConditionalRender from './conditionalRender';
-import Auth from './auth';
 
 export default function Nav() {
-    const isLoggedIn = Auth();
 
     return (
         <nav>
