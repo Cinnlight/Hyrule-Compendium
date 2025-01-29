@@ -16,7 +16,7 @@ class AuthController {
 
     register = async (req: Request, res: Response): Promise<void> => {
         try {
-            const { login, email, password, display_name } = req.body;
+            const { email, password, display_name } = req.body;
     
             // Hash password
             const hashedPassword = await bcrypt.hash(password, 10);
@@ -43,17 +43,58 @@ class AuthController {
     };
 
     resendVerification = async (req: Request, res: Response): Promise<void> => {
-        // TODO: Complete this
+        try {
+            const { email } = req.body;
+
+            // Check if user exists
+            const user = await Users.findOne({ where: { email } });
+            if (!user) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+            }
+
+            // Resend verification email
+            await this.emailController.emailVerificationRequest(req, res);
+
+            res.status(200).json({ message: 'Verification email resent successfully' });
+        } catch (error) {
+            res.status(400).json({ error: 'Failed to resend verification email' });
+        }
         return;
     };
 
     login = async (req: Request, res: Response): Promise<void> => {
-        // TODO: Complete this
+        try {
+            const { login, password } = req.body;
+
+            // Check if user exists
+            const user = await Users.findOne({ where: { login } });
+            if (!user) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+            }
+
+            // Compare password
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+            res.status(401).json({ error: 'Invalid credentials' });
+            return;
+            }
+
+            // TODO: Generate and return a token (e.g., JWT)
+
+            res.status(200).json({ message: 'Login successful' });
+        } catch (error) {
+            res.status(400).json({ error: 'Login failed' });
+        }
         return;
     };
 
     logout = async (req: Request, res: Response): Promise<void> => {
-        // TODO: Complete this
+        // Invalidate the user's session or token
+        // TODO: Implement token invalidation logic
+
+        res.status(200).json({ message: 'Logout successful' });
         return;
     };
 }
