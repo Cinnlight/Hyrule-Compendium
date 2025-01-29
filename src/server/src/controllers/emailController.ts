@@ -25,18 +25,17 @@ class EmailController {
                 });
             }
 
-            // TODO: Uncomment once the email_val_key and email_val is saved to the database
-            // if (user.email_val_key !== token) {
-            //     return res.status(400).json({ 
-            //         success: false, 
-            //         message: 'Invalid verification token' 
-            //     });
-            // }
+            if (user.email_val_key !== token) {
+                return res.status(400).json({ 
+                    success: false, 
+                    message: 'Invalid verification token' 
+                });
+            }
 
-            // await user.update({
-            //     email_val: true,
-            //     email_val_key: null
-            // });
+            await user.update({
+                email_val: true,
+                email_val_key: null
+            });
 
             return res.json({ 
                 success: true, 
