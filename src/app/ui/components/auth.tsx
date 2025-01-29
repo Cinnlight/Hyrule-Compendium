@@ -1,4 +1,5 @@
 // ui/components/auth.tsx
+"use client";
 
 export default function Auth() {
     const token = localStorage.getItem("token");

@@ -1,7 +1,8 @@
 // ui/components/protecedRoute.tsx
+"use client";
 
 import { ComponentType, useEffect, useState } from "react";
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const ProtectedRoute = <P extends Object> (WrappedComponent: ComponentType<P>) => {
     const Wrapper = (props: P) => {
