@@ -1,10 +1,11 @@
-import express from 'express';
+import { Router } from 'express';
 import EmailController from '../../controllers/emailController.js';
 
-const emailRouter = express.Router();
+const emailRouter = Router();
+const emailController = new EmailController();
 
 // TODO: Fix the controller methods
-// emailRouter.get('/verify', EmailController.emailVerificationCallback);
-// emailRouter.post('/verification', EmailController.emailVerificationRequest);
+emailRouter.get('/verify', emailController.emailVerificationCallback);
+emailRouter.post('/verification', emailController.emailVerificationRequest);
 
 export default emailRouter;
