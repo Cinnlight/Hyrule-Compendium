@@ -8,6 +8,8 @@ interface UserAttributes {
     email: string;
     password: string;
     auth_level: number;
+    email_val?: boolean;
+    email_val_key?: string | null;
     created_at?: Date;
     updated_at?: Date;
     avatar_url?: string;
@@ -24,6 +26,8 @@ export class Users extends Model<UserAttributes, UserCreationAttributes> impleme
     declare created_at: Date;
     declare updated_at: Date;
     declare auth_level: number;
+    declare email_val: boolean;
+    declare email_val_key: string | null;
     declare avatar_url: string;
 }
 
@@ -67,6 +71,15 @@ export function UserFactory(sequelize: Sequelize): typeof Users {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 defaultValue: 1,
+            },
+            email_val: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+            },
+            email_val_key: {
+                type: DataTypes.STRING,
+                allowNull: true,
             },
             avatar_url: {
                 type: DataTypes.STRING,
