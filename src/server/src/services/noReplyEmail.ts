@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
+import { Users } from '../models/users.js';
 
 interface UserData {
   display_name: string;
@@ -38,7 +39,16 @@ export class EmailService {
       
       const validationToken = this.generateValidationToken();
 
-      // TODO: Save the validation token to the database
+      // Find user and update validation token
+      const user = await Users.findOne({ where: { email: userData.email }});
+      if (!user) {
+        return {
+          success: false,
+          error: 'User not found'
+        };
+      }
+
+      await user.update({ email_val_key: validationToken });
       
       const appUrl = process.env.NODE_ENV === 'production' ? process.env.APP_URL : 'http://localhost:3001';
 
@@ -50,7 +60,7 @@ export class EmailService {
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; text-align: center;">
             <h1>Welcome to ZOne, ${userData.display_name}!</h1>
             <p>Please verify your email by clicking the link below:</p>
-            <a href="${appUrl}/auth/email/verify?token=${validationToken}?email=${userData.email}"
+            <a href="${appUrl}/auth/email/verify?token=${validationToken}&email=${userData.email}"
               style="display: inline-block;
                   padding: 10px 20px;
                   background-color:rgb(96, 29, 160);

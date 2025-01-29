@@ -1,7 +1,24 @@
+'use client';
+
 import Link from 'next/link';
 import Search from './searchbar';
+import React, { useState, useEffect } from 'react';
 
 export default function Nav() {
+    
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        setIsLoggedIn(true);
+      }
+    };
+
+    checkLoginStatus();
+  },);
+
     return (
         <nav>
             <ul>
@@ -36,6 +53,7 @@ export default function Nav() {
                         Forum
                     </Link>
                 </li>
+                {isLoggedIn? (
                 <li>
                     <Link
                         href="/profile"
@@ -46,6 +64,18 @@ export default function Nav() {
                         Profile
                     </Link>
                 </li>
+                ): (
+                <li>
+                    <Link
+                        href="/login"
+                    >
+                        <span className="material-icons-round">
+                            login
+                        </span>
+                        Login or Register
+                    </Link>
+                </li>
+                )}
             </ul>
         </nav>
     )
