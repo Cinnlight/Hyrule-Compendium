@@ -1,5 +1,5 @@
 // ui/components/conditionalRender.tsx
-
+"use client";
 import Auth from "./auth";
 
 interface ConditionalRenderProps {
