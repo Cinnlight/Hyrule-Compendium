@@ -2,22 +2,9 @@
 
 import Link from 'next/link';
 import Search from './searchbar';
-import React, { useState, useEffect } from 'react';
+import ConditionalRender from './conditionalRender';
 
 export default function Nav() {
-    
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        setIsLoggedIn(true);
-      }
-    };
-
-    checkLoginStatus();
-  },);
 
     return (
         <nav>
@@ -53,29 +40,48 @@ export default function Nav() {
                         Forum
                     </Link>
                 </li>
-                {isLoggedIn? (
-                <li>
-                    <Link
-                        href="/profile"
-                    >
-                        <span className="material-icons-round">
-                            settings
-                        </span>
-                        Profile
-                    </Link>
-                </li>
-                ): (
-                <li>
-                    <Link
-                        href="/login"
-                    >
-                        <span className="material-icons-round">
-                            login
-                        </span>
-                        Login or Register
-                    </Link>
-                </li>
-                )}
+                <ConditionalRender
+                    renderIfTrue={
+                        <li>
+                            <Link
+                                href="/dashboard"
+                            >
+                                <span className="material-icons-round">
+                                    dashboard
+                                </span>
+                                Dashboard
+                            </Link>
+                        </li>
+                    }
+                    renderIfFalse={null} // no dashboard link if user is not logged in
+                />
+                 {/* Conditional rendering based on whether the user is logged in */}
+                <ConditionalRender 
+                    renderIfTrue={
+                        <li>
+                            <Link
+                                href="/profile"
+                            >
+                                <span className="material-icons-round">
+                                    settings
+                                </span>
+                                Profile
+                            </Link>
+                        </li>
+                    }
+                    renderIfFalse={
+                        <li>
+                            <Link
+                                href="/login"
+                            >
+                                <span className="material-icons-round">
+                                    login
+                                </span>
+                                Login or Register
+                            </Link>
+                        </li>
+                    }
+                />
             </ul>
         </nav>
     )
