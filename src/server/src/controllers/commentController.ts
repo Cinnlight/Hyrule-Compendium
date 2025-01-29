@@ -13,6 +13,9 @@ class CommentController {
                     },
                     {
                         model: Reactions,
+                        through: {
+                            attributes: ['count'],
+                        },
                     },
                 ],
             });
