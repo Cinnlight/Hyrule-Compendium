@@ -5,31 +5,39 @@ import { EmailService, EmailVerificationResult } from '../services/noReplyEmail.
 class EmailController {
     emailService = new EmailService();
 
-    emailVerificationCallback = async (req: Request, res: Response) => {
+    constructor() {
+        this.emailVerificationCallback = this.emailVerificationCallback.bind(this);
+        this.emailVerificationRequest = this.emailVerificationRequest.bind(this);
+    }
+
+    emailVerificationCallback = async (req: Request, res: Response): Promise<void> => {
         const { token, email } = req.query;
 
         if (!token || !email || typeof token !== 'string' || typeof email !== 'string') {
-            return res.status(400).json({ 
+            res.status(400).json({ 
                 success: false, 
                 message: 'Missing or invalid token or email' 
             });
+            return;
         }
 
         try {
             const user = await Users.findOne({ where: { email } });
 
             if (!user) {
-                return res.status(404).json({ 
+                res.status(404).json({ 
                     success: false, 
                     message: 'User not found' 
                 });
+                return;
             }
 
             if (user.email_val_key !== token) {
-                return res.status(400).json({ 
+                res.status(400).json({ 
                     success: false, 
                     message: 'Invalid verification token' 
                 });
+                return;
             }
 
             await user.update({
@@ -37,35 +45,40 @@ class EmailController {
                 email_val_key: null
             });
 
-            return res.json({ 
+            res.json({ 
                 success: true, 
                 message: 'Email verified successfully' 
             });
+            return;
 
         } catch (error: any) {
             console.error('Email verification error:', error);
-            return res.status(500).json({ 
+            res.status(500).json({ 
                 success: false, 
                 error: error.message 
             });
+            return;
         }
     };
 
-    emailVerificationRequest = async (req: Request, res: Response) => {
+    emailVerificationRequest = async (req: Request, res: Response): Promise<void> => {
         try {
             const result: EmailVerificationResult = await this.emailService.sendEmailVerification(req.body);
             
             if (result.success) {
-                return res.json(result);
+                res.json(result);
+                return;
             }
             
-            return res.status(500).json(result);
+            res.status(500).json(result);
+            return;
         } catch (error: any) {
             console.error('Email verification request error:', error);
-            return res.status(500).json({ 
+            res.status(500).json({ 
                 success: false, 
                 error: error.message 
             });
+            return;
         }
     };
 }
