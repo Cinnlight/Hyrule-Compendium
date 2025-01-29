@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
+import { Users } from '../models/users.js';
 
 interface UserData {
   display_name: string;
@@ -38,7 +39,16 @@ export class EmailService {
       
       const validationToken = this.generateValidationToken();
 
-      // TODO: Save the validation token to the database
+      // Find user and update validation token
+      const user = await Users.findOne({ where: { email: userData.email }});
+      if (!user) {
+        return {
+          success: false,
+          error: 'User not found'
+        };
+      }
+
+      await user.update({ email_val_key: validationToken });
       
       const appUrl = process.env.NODE_ENV === 'production' ? process.env.APP_URL : 'http://localhost:3001';
 
