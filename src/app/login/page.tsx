@@ -3,7 +3,7 @@
 import Login from '../ui/components/login';
 import Signup from '../ui/components/signup';
 import { useState } from 'react';
-import './login/page.module.css';
+import './page.module.css';
 
 export default function LoginPage() {
     const [showSignup, setShowSignup] = useState(false);  
