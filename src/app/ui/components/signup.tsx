@@ -1,14 +1,12 @@
-// login component
+// signin component
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
-const Login: React.FC = () => {
+const Signup: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
-    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -17,8 +15,8 @@ const Login: React.FC = () => {
             return;
         }
 
-        try {   {/*could need to change the fetch route*/}
-            const response = await fetch('api/login' , {
+        try {
+            const response = await fetch('api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,16 +33,14 @@ const Login: React.FC = () => {
             setPassword('');
             setError(null);
 
-            // Other actions here. (e.g. save token to localStorage an navigate to /dashboard.)
-            localStorage.setItem('token', data.token);
-            router.push('/dashboard');
+            // Other actions here. (e.g. save token to localStorage, etc.)
         } catch (err: any) {
             setError(err.message || 'An error occurred. Please try again.');
         }
     };
     return (
         <div className="login">
-            <h1>Login</h1>
+            <h1>Register</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div className="login">
@@ -77,10 +73,10 @@ const Login: React.FC = () => {
                     />
                 </div>
 
-                <button type="submit" className="loginbutton" >Login</button>
+                <button type="submit" className="loginbutton" >Register</button>
             </form>
         </div>
     );
 };
 
-export default Login;
+export default Signup;

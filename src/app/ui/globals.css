@@ -102,6 +102,11 @@ nav {
   }
 }
 
+h1 {
+  font: 2.8rem var(--font-accent);
+  letter-spacing:0.1rem;
+}
+
 @media (prefers-color-scheme: light) {
   html {
     color-scheme: light;
