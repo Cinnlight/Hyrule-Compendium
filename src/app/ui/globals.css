@@ -81,8 +81,7 @@ nav {
       }
 
       a:hover {
-        text-shadow:
-                     0 0 0.8rem var(--blurple),
+        text-shadow: 0 0 0.8rem var(--blurple),
                      0 0 0.2rem var(--foreground),
                      0 0 0.5rem var(--foreground),
                      0 0 0.6rem var(--foreground);
@@ -109,10 +108,26 @@ nav {
     color: var(--foreground);
   }
 
+  #navSearch:focus {
+    box-shadow: 0 0 0.8rem var(--blurple),
+    0 0 0.2rem var(--foreground),
+    0 0 0.5rem var(--foreground),
+    0 0 0.6rem var(--foreground);
+  }
+
   #navSearchButton {
     background:0;
     border:none;
     color:var(--foreground);
+    cursor:pointer;
+    transition-duration:0.5s;
+  }
+
+  #navSearchButton:hover {
+    text-shadow: 0 0 0.8rem var(--blurple),
+                 0 0 0.2rem var(--foreground),
+                 0 0 0.5rem var(--foreground),
+                 0 0 0.6rem var(--foreground);
   }
 }
 
