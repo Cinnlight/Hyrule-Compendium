@@ -13,6 +13,7 @@ import * as categoriesSeed from "../src/sequelize_seeds/categoriesSeed.js";
 import * as pagesSeed from "../src/sequelize_seeds/pagesSeed.js";
 import * as contentSeed from "../src/sequelize_seeds/contentSeed.js";
 import * as commentsSeed from "../src/sequelize_seeds/commentsSeed.js";
+import * as commentReactionsSeed from "../src/sequelize_seeds/commentReactionsSeed.js";
 
 const adminSequelize = new Sequelize(
   "postgres",
@@ -81,6 +82,9 @@ export async function initializeDatabase(reseed: boolean = true) {
 
       console.log("Seeding comments...");
       await commentsSeed.up(queryInterface);
+
+      console.log("Seeding comment reactions...");
+      await commentReactionsSeed.up(queryInterface);
 
       console.log("Seeding completed successfully.");
     } catch (seedErr) {
