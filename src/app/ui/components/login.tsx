@@ -2,11 +2,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -15,8 +17,8 @@ const Login: React.FC = () => {
             return;
         }
 
-        try {
-            const response = await fetch('api/login', {
+        try {   {/*could need to change the fetch route*/}
+            const response = await fetch('api/login' , {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,7 +35,9 @@ const Login: React.FC = () => {
             setPassword('');
             setError(null);
 
-            // Other actions here. (e.g. save token to localStorage, etc.)
+            // Other actions here. (e.g. save token to localStorage an navigate to /dashboard.)
+            localStorage.setItem('token', data.token);
+            router.push('/dashboard');
         } catch (err: any) {
             setError(err.message || 'An error occurred. Please try again.');
         }
