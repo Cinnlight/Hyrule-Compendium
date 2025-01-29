@@ -33,6 +33,13 @@
         letter-spacing:0;
     }
 
+    input:focus {
+        box-shadow: 0 0 0.8rem var(--blurple),
+        0 0 0.2rem var(--foreground),
+        0 0 0.5rem var(--foreground),
+        0 0 0.6rem var(--foreground);
+    }
+
     button {
         width:100%;
         margin:8px auto;
