@@ -39,7 +39,7 @@ const Signup: React.FC = () => {
         }
     };
     return (
-        <div className="login">
+        <div>
             <h1>Register</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>

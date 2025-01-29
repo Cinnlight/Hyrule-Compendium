@@ -11,7 +11,7 @@ export default function LoginPage() {
         <main className={styles.login}>
           {showSignup? <Signup />: <Login />}
           <button onClick={() => setShowSignup(!showSignup)}>
-            {showSignup? 'Already have an account? Login': "Don't have an account? Sign up"}
+            {showSignup? 'Already have an account? Login!': "Don't have an account? Register!"}
           </button>
         </main>
     );
