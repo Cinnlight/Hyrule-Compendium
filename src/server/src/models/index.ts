@@ -5,6 +5,7 @@ dotenv.config();
 
 // Import factory functions
 import { Categories, CategoryFactory } from './categories.js';
+import { CommentReactions, CommentReactionsFactory } from './comment-reactions.js';
 import { Comments, CommentFactory } from './comments.js';
 import { Content, ContentFactory } from './content.js';
 import { PageCategories, PageCategoryFactory } from './page-categories.js';
@@ -12,6 +13,7 @@ import { Pages, PageFactory } from './pages.js';
 import { Users, UserFactory } from './users.js';
 import { Reactions, ReactionFactory } from './reactions.js';
 import { ContentContributors, ContentContributorsFactory } from './content-contributors.js';
+
 
 // Initialize Sequelize instance
 const sequelize = process.env.DB_URL
@@ -36,6 +38,7 @@ PageFactory(sequelize);
 UserFactory(sequelize);
 ReactionFactory(sequelize);
 ContentContributorsFactory(sequelize);
+CommentReactionsFactory(sequelize);
 
 // Associations
 Pages.belongsTo(Users, { foreignKey: 'created_by' });
@@ -45,10 +48,6 @@ Comments.belongsTo(Pages, { foreignKey: 'page_id', onDelete: 'CASCADE' });
 // Comment to User Relationship
 Comments.belongsTo(Users, { foreignKey: 'user_id' });
 
-// Comment Reactions Relationships
-Comments.belongsToMany(Reactions, { foreignKey: 'comment_id', through: 'comment_reactions', onDelete: 'CASCADE' });
-Reactions.belongsToMany(Comments, { foreignKey: 'reaction_id', through: 'comment_reactions' });
-
 // Content Relationships
 Content.belongsTo(Users, { foreignKey: 'created_by' });
 Content.belongsTo(Pages, { foreignKey: 'page_id', onDelete: 'CASCADE' });
@@ -56,12 +55,16 @@ Content.belongsTo(Users, { foreignKey: 'verified_by' });
 
 // Content Contributors Relationships
 Content.belongsToMany(Users, { foreignKey: 'id', otherKey: 'user_id', through: ContentContributors });
-Users.belongsToMany(Content, { foreignKey: 'id', otherKey: 'content_id', through: ContentContributors });
+Users.belongsToMany(Content, { foreignKey: 'id', otherKey: 'content_id', through: ContentContributors, onDelete: 'CASCADE' });
 
 PageCategories.belongsTo(Categories, { foreignKey: 'id' });
 Categories.belongsTo(PageCategories, { foreignKey: 'category_id', onDelete: 'CASCADE' });
 
 PageCategories.belongsTo(Pages, { foreignKey: 'id' });
+
+// Comment Reactions Associations
+Comments.belongsToMany(Reactions, { through: CommentReactions, foreignKey: 'comment_id', onDelete: 'CASCADE' });
+Reactions.belongsToMany(Comments, { through: CommentReactions, foreignKey: 'reaction_id' });
 
 // Export models and sequelize instance
 export {
@@ -72,6 +75,7 @@ export {
   PageCategories,
   Pages,
   Users,
-  Reactions
+  Reactions,
+  CommentReactions
 };
 
