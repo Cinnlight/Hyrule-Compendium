@@ -45,15 +45,14 @@ const Login: React.FC = () => {
     return (
         <div>
             <h1>Login</h1>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div className="login">
-                    <label htmlFor="email" className="loginlabel">
+                    <label htmlFor="displayName" className="loginlabel">
                         Display Name:
                     </label>
                     <input
-                        type="email"
-                        id="email"
+                        type="displayName"
+                        id="displayName"
                         className="loginemail"
                         value={displayName}
                         onChange={(e) => setDisplayName(e.target.value)}
@@ -76,7 +75,7 @@ const Login: React.FC = () => {
                         required
                     />
                 </div>
-
+                {error && <p style={{ color: 'red' }}>{error}</p>}
                 <button type="submit" className="loginbutton" >Login</button>
             </form>
         </div>
