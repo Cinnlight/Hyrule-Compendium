@@ -5,25 +5,25 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const Login: React.FC = () => {
-    const [email, setEmail] = useState<string>('');
+    const [displayName, setDisplayName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!email || !password) {
+        if (!displayName || !password) {
             setError('Please fill in all fields');
             return;
         }
 
-        try {   {/*could need to change the fetch route*/}
-            const response = await fetch('api/login' , {
+        try {
+            const response = await fetch('auth/login' , {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ displayName, password }),
             })
             if (!response.ok) {
                 throw new Error('Invalid login credentials');
@@ -31,7 +31,7 @@ const Login: React.FC = () => {
             const data = await response.json();
             console.log("login successful", data); // check to see if we need to remove this line upon deployment
 
-            setEmail('');
+            setDisplayName('');
             setPassword('');
             setError(null);
 
@@ -49,15 +49,15 @@ const Login: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <div className="login">
                     <label htmlFor="email" className="loginlabel">
-                        Email:
+                        Display Name:
                     </label>
                     <input
                         type="email"
                         id="email"
                         className="loginemail"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your email"
+                        value={displayName}
+                        onChange={(e) => setDisplayName(e.target.value)}
+                        placeholder="Enter your Display Name"
                         required
                     />
                 </div>

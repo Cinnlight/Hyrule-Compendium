@@ -5,31 +5,36 @@ import { useState } from 'react';
 
 const Signup: React.FC = () => {
     const [email, setEmail] = useState<string>('');
+    const [display_name, setDisplayName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
 
+    const passwrodRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!email || !password) {
+        if (!email || !password || !display_name) {
             setError('Please fill in all fields');
             return;
         }
-
+        if (!passwrodRegex.test(password)) {
+            setError('Password must contain at least one number, one uppercase letter, one lowercase letter, and be at least 8 characters long');
+            return;
+        }
         try {
-            const response = await fetch('api/login', {
+            const response = await fetch('auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, password, display_name }),
             })
-            if (!response.ok) {
-                throw new Error('Invalid login credentials');
-            }
+ 
             const data = await response.json();
-            console.log("login successful", data); // check to see if we need to remove this line upon deployment
+            console.log("registration successful", data); // check to see if we need to remove this line upon deployment
 
             setEmail('');
+            setDisplayName('');
             setPassword('');
             setError(null);
 
@@ -58,6 +63,21 @@ const Signup: React.FC = () => {
                     />
                 </div>
 
+                <div className="mb-4">
+                    <label htmlFor="display_name" className="loginlabel">
+                        Display Name:
+                    </label>
+                    <input
+                        type="text"
+                        id="display_name"
+                        className="loginemail"
+                        value={display_name}
+                        onChange={(e) => setDisplayName(e.target.value)}
+                        placeholder="Enter your Display Name"
+                        required
+                    />
+                </div>
+                
                 <div className="mb-4">
                     <label htmlFor="password" className="loginlabel">
                         Password:
