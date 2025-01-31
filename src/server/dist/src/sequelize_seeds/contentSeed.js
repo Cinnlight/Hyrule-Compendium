@@ -1,7 +1,4 @@
-import { QueryInterface } from "sequelize";
-import { v4 as uuidv4 } from 'uuid';
-
-export async function up(queryInterface: QueryInterface) {
+export async function up(queryInterface) {
     await queryInterface.bulkInsert("Content", [
         { id: '88888888-8888-8888-8888-888888888888', page_id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', content: 'Welcome to our platform!', version: 1, created_by: '11111111-1111-1111-1111-111111111111', created_at: new Date(), updated_at: new Date(), verified_at: null, verified_by: null },
         { id: '99999999-9999-9999-9999-999999999999', page_id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', content: 'Here\'s how to get started...', version: 1, created_by: '11111111-1111-1111-1111-111111111111', created_at: new Date(), updated_at: new Date(), verified_at: null, verified_by: null },
@@ -13,8 +10,7 @@ export async function up(queryInterface: QueryInterface) {
         { content_id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', user_id: '11111111-1111-1111-1111-111111111111' },
     ]);
 }
-
-export async function down(queryInterface: QueryInterface) {
+export async function down(queryInterface) {
     await queryInterface.bulkDelete("content_contributors", {}, {});
     await queryInterface.bulkDelete("Content", {}, {});
 }

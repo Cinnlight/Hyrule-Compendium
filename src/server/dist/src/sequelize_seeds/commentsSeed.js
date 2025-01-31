@@ -1,7 +1,4 @@
-import { QueryInterface } from "sequelize";
-import { v4 as uuidv4 } from 'uuid';
-
-export async function up(queryInterface: QueryInterface) {
+export async function up(queryInterface) {
     await queryInterface.bulkInsert("Comments", [
         {
             id: '11111111-1111-1111-1111-111111111111', // manual UUID for first comment
@@ -19,7 +16,6 @@ export async function up(queryInterface: QueryInterface) {
         }
     ]);
 }
-
-export async function down(queryInterface: QueryInterface) {
+export async function down(queryInterface) {
     await queryInterface.bulkDelete("Comments", {}, {});
 }
