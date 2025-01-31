@@ -47,18 +47,15 @@ class AuthController {
                 auth_level: 0
             });
             // Add email to request body
-            req.body.email = email;
+            req.body.user = user;
             // Send verification email
-            const emailSent = await this.emailController.emailVerificationRequest(req, res);
-            if (!emailSent) {
-                res.status(500).json({ error: 'Failed to send verification email' });
-                return;
-            }
-            res.status(201).json({ message: 'User registered successfully. Please check your email for verification.' });
+            await this.emailController.emailVerificationRequest(req, res);
         }
         catch (error) {
             console.error('Registration error:', error);
-            res.status(500).json({ error: 'Internal server error' });
+            if (!res.headersSent) {
+                res.status(500).json({ error: 'Internal server error' });
+            }
         }
     };
     resendVerification = async (req, res) => {
