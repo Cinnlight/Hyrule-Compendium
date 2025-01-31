@@ -1,9 +1,10 @@
 import { QueryInterface } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 export async function up(queryInterface: QueryInterface) {
     await queryInterface.bulkInsert("Users", [
         {
-            id: 1,
+            id: '11111111-1111-1111-1111-111111111111',
             login: 'admin',
             display_name: 'Administrator',
             email: 'admin@example.com',
@@ -14,7 +15,7 @@ export async function up(queryInterface: QueryInterface) {
             auth_level: 1,
         },
         {
-            id: 2,
+            id: '22222222-2222-2222-2222-222222222222',
             login: 'johndoe',
             display_name: 'John Doe',
             email: 'john@example.com',
@@ -25,7 +26,7 @@ export async function up(queryInterface: QueryInterface) {
             auth_level: 1,
         },
         {
-            id: 3,
+            id: '33333333-3333-3333-3333-333333333333',
             login: 'janedoe',
             display_name: 'Jane Doe',
             email: 'jane@example.com',
