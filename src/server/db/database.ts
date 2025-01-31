@@ -7,6 +7,14 @@ import "../src/models/index.js";
 import { Sequelize } from "sequelize";
 import { sequelize } from "../src/models/index.js"; // Import the Sequelize instance from models/index.ts
 
+// Import Umzug and path for migration handling
+import { Umzug, SequelizeStorage } from "umzug";
+import path from "path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 import * as usersSeed from "../src/sequelize_seeds/usersSeed.js";
 import * as reactionsSeed from "../src/sequelize_seeds/reactionsSeed.js";
 import * as categoriesSeed from "../src/sequelize_seeds/categoriesSeed.js";
@@ -25,6 +33,14 @@ const adminSequelize = new Sequelize(
     logging: false,
   }
 );
+
+// Initialize Umzug instance for migrations
+const migrator = new Umzug({
+  migrations: { glob: path.join(__dirname, '../src/migrations/content-contributor-migrations.js') },
+  context: sequelize.getQueryInterface(),
+  storage: new SequelizeStorage({ sequelize }),
+  logger: console, // Logs migration status
+});
 
 // TODO: Change to use environment variable for reseed flag
 export async function initializeDatabase(reseed: boolean = true) {
@@ -49,6 +65,11 @@ export async function initializeDatabase(reseed: boolean = true) {
     // Authenticate target database connection
     await sequelize.authenticate();
     console.log("Connection to target database established successfully.");
+
+    // Migrate database
+    // console.log("Running migrations...");
+    // await migrator.up();
+    // console.log("All migrations executed successfully.");
 
     // Sync models
     console.log("Synchronizing models...");
