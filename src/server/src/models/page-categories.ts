@@ -1,15 +1,16 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 // Define attributes for the PageCategory
 interface PageCategoryAttributes {
-    page_id: number;
-    category_id: number;
+    page_id: string;
+    category_id: string;
     key?: string[];
 }
 
 export class PageCategories extends Model<PageCategoryAttributes> implements PageCategoryAttributes {
-    declare page_id: number;
-    declare category_id: number;
+    declare page_id: string;
+    declare category_id: string;
     declare key?: string[];
 }
 
@@ -17,14 +18,22 @@ export function PageCategoryFactory(sequelize: Sequelize): typeof PageCategories
     PageCategories.init(
         {
             page_id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 allowNull: false,
                 primaryKey: true,
+                references: {
+                    model: 'Pages',
+                    key: 'id'
+                },
             },
             category_id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 allowNull: false,
                 primaryKey: true,
+                references: {
+                    model: 'Categories',
+                    key: 'id'
+                },
             },
             key: {
                 type: DataTypes.ARRAY(DataTypes.TEXT),
