@@ -44,13 +44,13 @@ const Signup: React.FC = () => {
         }
     };
     return (
-        <div className="login">
+        <div>
             <h1>Register</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div className="login">
                     <label htmlFor="email" className="loginlabel">
-                        Email:
+                        Email
                     </label>
                     <input
                         type="email"
@@ -80,7 +80,7 @@ const Signup: React.FC = () => {
                 
                 <div className="mb-4">
                     <label htmlFor="password" className="loginlabel">
-                        Password:
+                        Password
                     </label>
                     <input
                         type="password"
