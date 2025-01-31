@@ -48,7 +48,7 @@ const Login: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <div className="login">
                     <label htmlFor="displayName" className="loginlabel">
-                        Display Name:
+                        Display Name
                     </label>
                     <input
                         type="displayName"

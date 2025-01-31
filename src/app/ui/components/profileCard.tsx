@@ -2,9 +2,11 @@
 
 export default function ProfileCard() {
     return (
-        <div>
-            <h1>Users Profile</h1>
-            <p>Users page content</p>
-        </div>
+        <>
+            <span className="avatar-left">[</span>
+            <img className="avatar" src="./default.gif" />
+            <span className="avatar-right">]</span>
+            <h1>[userData.name]'s Profile</h1>
+        </>
     );
 }
