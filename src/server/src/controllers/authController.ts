@@ -19,6 +19,32 @@ class AuthController {
         try {
             const { email, password, display_name } = req.body;
     
+            // Input validation
+            if (!email || !password || !display_name) {
+                res.status(400).json({ error: 'Missing required fields', fields: { email: !email, password: !password, display_name: !display_name } });
+                return;
+            }
+    
+            // Email format validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                res.status(400).json({ error: 'Invalid email format' });
+                return;
+            }
+    
+            // Password strength validation
+            if (password.length < 6) {
+                res.status(400).json({ error: 'Password must be at least 6 characters long' });
+                return;
+            }
+    
+            // Check for existing user
+            const existingUser = await Users.findOne({ where: { email } });
+            if (existingUser) {
+                res.status(400).json({ error: 'Email already registered' });
+                return;
+            }
+    
             // Hash password
             const hashedPassword = await bcrypt.hash(password, 10);
             
@@ -33,13 +59,18 @@ class AuthController {
     
             // Add user's email to the request
             req.body.email = email;
-
+    
             // Send verification email
             await this.emailController.emailVerificationRequest(req, res);
     
             res.status(201).json({ message: 'User registered successfully' });
-        } catch (error) {
-            res.status(400).json({ error: 'Registration failed' });
+        } catch (error: any) {
+            console.error('Registration error:', error);
+            if (error.name === 'SequelizeValidationError') {
+                res.status(400).json({ error: 'Validation error', details: error.errors.map((e: any) => e.message) });
+            } else {
+                res.status(400).json({ error: error.message || 'Registration failed' });
+            }
         }
     };
 
@@ -71,7 +102,7 @@ class AuthController {
             // Check if user exists
             const user = await Users.findOne({ where: { login } });
             if (!user) {
-                res.status(404).json({ error: 'User not found' });
+                res.status(404).json({ error: 'Invalid credentials' });
                 return;
             }
 
