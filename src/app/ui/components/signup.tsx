@@ -78,7 +78,7 @@ const Signup: React.FC = () => {
 
                 <div className="mb-4">
                     <label htmlFor="display_name" className="loginlabel">
-                        Display Name:
+                        Display Name
                     </label>
                     <input
                         type="text"
