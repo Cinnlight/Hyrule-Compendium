@@ -1,11 +1,12 @@
 import { QueryInterface } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 export async function up(queryInterface: QueryInterface) {
     await queryInterface.bulkInsert("Categories", [
-        { id: 1, name: 'Technology' },
-        { id: 2, name: 'Science' },
-        { id: 3, name: 'History' },
-        { id: 4, name: 'Literature' }
+        { id: uuidv4(), name: 'Technology' },
+        { id: uuidv4(), name: 'Science' },
+        { id: uuidv4(), name: 'History' },
+        { id: uuidv4(), name: 'Literature' }
     ]);
 }
 

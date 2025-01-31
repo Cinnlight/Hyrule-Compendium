@@ -1,8 +1,8 @@
-
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 interface CommentReactionsAttributes {
-    comment_id: number;
+    comment_id: string;
     reaction_id: number;
     count: number;
 }
@@ -10,7 +10,7 @@ interface CommentReactionsAttributes {
 interface CommentReactionsCreationAttributes extends Optional<CommentReactionsAttributes, "comment_id" | "reaction_id"> {}
 
 export class CommentReactions extends Model<CommentReactionsAttributes, CommentReactionsCreationAttributes> implements CommentReactionsAttributes {
-    declare comment_id: number;
+    declare comment_id: string;
     declare reaction_id: number;
     declare count: number;
 }
@@ -19,7 +19,7 @@ export function CommentReactionsFactory(sequelize: Sequelize): typeof CommentRea
     CommentReactions.init(
         {
             comment_id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 allowNull: false,
                 references: {
                     model: 'Comments',
@@ -29,10 +29,6 @@ export function CommentReactionsFactory(sequelize: Sequelize): typeof CommentRea
             reaction_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
-                references: {
-                    model: 'Reactions',
-                    key: 'id'
-                }
             },
             count: {
                 type: DataTypes.INTEGER,

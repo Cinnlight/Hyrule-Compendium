@@ -54,8 +54,8 @@ Content.belongsTo(Pages, { foreignKey: 'page_id', onDelete: 'CASCADE' });
 Content.belongsTo(Users, { foreignKey: 'verified_by' });
 
 // Content Contributors Relationships
-Content.belongsToMany(Users, { foreignKey: 'id', otherKey: 'user_id', through: ContentContributors });
-Users.belongsToMany(Content, { foreignKey: 'id', otherKey: 'content_id', through: ContentContributors, onDelete: 'CASCADE' });
+Content.belongsToMany(Users, { foreignKey: 'content_id', otherKey: 'user_id', through: ContentContributors });
+Users.belongsToMany(Content, { foreignKey: 'user_id', otherKey: 'content_id', through: ContentContributors, onDelete: 'CASCADE' });
 
 PageCategories.belongsTo(Categories, { foreignKey: 'id' });
 Categories.belongsTo(PageCategories, { foreignKey: 'category_id', onDelete: 'CASCADE' });

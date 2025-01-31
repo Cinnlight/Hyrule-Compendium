@@ -1,44 +1,48 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 // Define attributes for the Content
 interface ContentAttributes {
-    id: number;
-    page_id: number;
+    id: string;
+    page_id: string; // Changed from number to string
     content: string;
     version?: number;
-    created_by?: number;
+    created_by?: string;
     created_at?: Date;
     updated_at?: Date;
     verified_at?: Date;
-    verified_by?: number;
+    verified_by?: string;
 }
 
 interface ContentCreationAttributes extends Optional<ContentAttributes, "id"> {}
 
 export class Content extends Model<ContentAttributes, ContentCreationAttributes> implements ContentAttributes {
-    declare id: number;
-    declare page_id: number;
+    declare id: string;
+    declare page_id: string; // Changed from number to string
     declare content: string;
     declare version: number;
-    declare created_by: number;
+    declare created_by: string;
     declare created_at: Date;
     declare updated_at: Date;
     declare verified_at: Date;
-    declare verified_by: number;
+    declare verified_by: string;
 }
 
 export function ContentFactory(sequelize: Sequelize): typeof Content {
     Content.init(
         {
             id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 primaryKey: true,
-                autoIncrement: true,
+                defaultValue: uuidv4(),
             },
             page_id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID, // Changed from DataTypes.INTEGER to DataTypes.UUID
                 allowNull: false,
-                // ON DELETE CASCADE
+                references: {
+                    model: 'Pages',
+                    key: 'id'
+                },
             },
             content: {
                 type: DataTypes.TEXT,
@@ -49,7 +53,11 @@ export function ContentFactory(sequelize: Sequelize): typeof Content {
                 defaultValue: 1,
             },
             created_by: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
+                references: {
+                    model: 'Users',
+                    key: 'id'
+                },
             },
             created_at: {
                 type: DataTypes.DATE,
@@ -63,7 +71,11 @@ export function ContentFactory(sequelize: Sequelize): typeof Content {
                 type: DataTypes.DATE,
             },
             verified_by: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
+                references: {
+                    model: 'Users',
+                    key: 'id'
+                },
             },
         },
         {

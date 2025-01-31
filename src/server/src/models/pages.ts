@@ -1,11 +1,12 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 // Define attributes for the Page
 interface PageAttributes {
-    id: number;
+    id: string;
     title: string;
     slug: string;
-    created_by: number;
+    created_by: string;
     created_at: Date;
     updated_at: Date;
 }
@@ -13,10 +14,10 @@ interface PageAttributes {
 interface PageCreationAttributes extends Optional<PageAttributes, "id"> {}
 
 export class Pages extends Model<PageAttributes, PageCreationAttributes> implements PageAttributes {
-    declare id: number;
+    declare id: string;
     declare title: string;
     declare slug: string;
-    declare created_by: number;
+    declare created_by: string;
     declare created_at: Date;
     declare updated_at: Date;
 }
@@ -25,9 +26,9 @@ export function PageFactory(sequelize: Sequelize): typeof Pages {
     Pages.init(
         {
             id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 primaryKey: true,
-                autoIncrement: true,
+                defaultValue: uuidv4(),
             },
             title: {
                 type: DataTypes.STRING,
@@ -39,8 +40,12 @@ export function PageFactory(sequelize: Sequelize): typeof Pages {
                 unique: true,
             },
             created_by: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 allowNull: false,
+                references: {
+                    model: 'Users',
+                    key: 'id'
+                },
             },
             created_at: {
                 type: DataTypes.DATE,
