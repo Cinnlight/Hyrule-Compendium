@@ -16,29 +16,29 @@ export default function ProfileCard() {
     const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const response = await fetch('/api/user/{display_name}');
+    // useEffect(() => {
+    //     const fetchUser = async () => {
+    //         try {
+    //             const response = await fetch(`/api/user/1`);
 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+    //             if (!response.ok) {
+    //                 throw new Error('Network response was not ok');
+    //             }
 
-                const data = await response.json();
+    //             const data = await response.json();
 
-                // store only necessary fields in state
-                setUser(data);
-            } catch (error) {
-                console.log('Error fetching User:', error);
-                setError('Error fetching User');
-            }
-        };
+    //             // store only necessary fields in state
+    //             setUser(data);
+    //         } catch (error) {
+    //             console.log('Error fetching User:', error);
+    //             setError('Error fetching User');
+    //         }
+    //     };
 
-        fetchUser();
-    }, []); // Empty dependancy array mean it runs only once when the component mounts
+    //     fetchUser();
+    // }, []); // Empty dependancy array mean it runs only once when the component mounts
 
-    if (error) return <p style={{ color: 'red' }}>{error}</p>;
+    // if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
     return (
         <div>
@@ -49,7 +49,7 @@ export default function ProfileCard() {
             <p>
                 <i className="material-icons-round" title="email verified">verified</i> (or <i className="material-icons-round" title="email not verified">cancel</i>)
             </p>
-            {user ? (
+            {/* {user ? (
                 <>
                     <h1>{user.display_name}'s Profile</h1>
                     <img src={user.avatar_url} alt={`{user.display_name}'s avatar'`}/>
@@ -60,7 +60,7 @@ export default function ProfileCard() {
                 <p>Loading user Profile...</p>
             )}
 
-            <p>Users page content</p>
+            <p>Users page content</p> */}
         </div>
     );
 }
