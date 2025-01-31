@@ -56,22 +56,20 @@ class EmailController {
             return;
         }
     };
-    async emailVerificationRequest(req, res) {
+    emailVerificationRequest = async (req, res) => {
         try {
-            const result = await this.emailService.sendEmailVerification(req.body.email);
+            const { user } = req.body;
+            const result = await this.emailService.sendEmailVerification(user);
             if (result.success) {
                 res.json(result);
-                return true;
+                return;
             }
             res.status(500).json(result);
         }
         catch (error) {
             console.error('Email verification error:', error);
+            res.status(500).json({ success: false, error: 'Failed to send verification email' });
         }
-        finally {
-            return false;
-        }
-    }
-    ;
+    };
 }
 export default EmailController;

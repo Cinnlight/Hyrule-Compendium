@@ -24,11 +24,11 @@ import * as commentsSeed from "../src/sequelize_seeds/commentsSeed.js";
 import * as commentReactionsSeed from "../src/sequelize_seeds/commentReactionsSeed.js";
 
 const adminSequelize = new Sequelize(
-  process.env.DB_NAME || "hyrule_db",
-  process.env.DB_USER || "postgres",
-  process.env.DB_PASSWORD || "postgres",
+  process.env.DB_NAME!,
+  process.env.DB_USER!,
+  process.env.DB_PASSWORD!,
   {
-    host: process.env.DB_HOST || "localhost",
+    host: process.env.DB_HOST!,
     dialect: "postgres",
     logging: false,
   }
@@ -44,7 +44,7 @@ const migrator = new Umzug({
 
 // TODO: Change to use environment variable for reseed flag
 export async function initializeDatabase(reseed: boolean = true) {
-  const dbName = process.env.DB_NAME || "hyrule_db";
+  const dbName = process.env.DB_NAME!;
 
   try {
     // Verify database existence
