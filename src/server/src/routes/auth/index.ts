@@ -4,8 +4,6 @@ import AuthController from '../../controllers/authController.js';
 
 const authRouter = express.Router();
 const authController = new AuthController();
-
-const emailRouter = express.Router();
 const emailController = new EmailController();
 
 authRouter.post('/login', authController.login);
@@ -13,7 +11,7 @@ authRouter.post('/logout', authController.logout);
 authRouter.post('/register', authController.register);
 authRouter.post('/resend-verification', authController.resendVerification);
 
-emailRouter.get('/email/verify', emailController.emailVerificationCallback);
-emailRouter.post('/email/verification', emailController.emailVerificationRequest);
+authRouter.get('/email/verify', emailController.emailVerificationCallback);
+authRouter.post('/email/verification', emailController.emailVerificationRequest);
 
 export default authRouter;
