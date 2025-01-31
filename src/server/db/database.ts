@@ -24,7 +24,7 @@ import * as commentsSeed from "../src/sequelize_seeds/commentsSeed.js";
 import * as commentReactionsSeed from "../src/sequelize_seeds/commentReactionsSeed.js";
 
 const adminSequelize = new Sequelize(
-  "postgres",
+  process.env.DB_NAME || "hyrule_db",
   process.env.DB_USER || "postgres",
   process.env.DB_PASSWORD || "postgres",
   {
