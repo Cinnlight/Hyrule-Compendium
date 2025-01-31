@@ -58,9 +58,9 @@ export class EmailService {
         subject: `${userData.display_name} ZOne Email Verification`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; text-align: center;">
-            <h1>Welcome to ZOne, ${userData.display_name}!</h1>
+            <h1>Welcome to ZOne, ${user.display_name}!</h1>
             <p>Please verify your email by clicking the link below:</p>
-            <a href="${appUrl}/auth/email/verify?token=${validationToken}&email=${userData.email}"
+            <a href="${appUrl}/auth/email/verify?token=${validationToken}&email=${user.email}"
               style="display: inline-block;
                   padding: 10px 20px;
                   background-color:rgb(96, 29, 160);
