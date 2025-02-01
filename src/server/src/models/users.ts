@@ -38,7 +38,7 @@ export function UserFactory(sequelize: Sequelize): typeof Users {
             id: {
                 type: DataTypes.UUID,
                 primaryKey: true,
-                defaultValue: uuidv4(),
+                defaultValue: () => uuidv4(),
             },
             login: {
                 type: DataTypes.STRING,
