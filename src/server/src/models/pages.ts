@@ -28,7 +28,7 @@ export function PageFactory(sequelize: Sequelize): typeof Pages {
             id: {
                 type: DataTypes.UUID,
                 primaryKey: true,
-                defaultValue: uuidv4(),
+                defaultValue: () => uuidv4(),
             },
             title: {
                 type: DataTypes.STRING,
