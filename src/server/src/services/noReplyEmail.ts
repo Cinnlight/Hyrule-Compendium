@@ -50,7 +50,7 @@ export class EmailService {
 
       await user.update({ email_val_key: validationToken });
       
-      const appUrl = process.env.NODE_ENV === 'production' ? process.env.APP_URL : 'http://localhost:3001';
+      const appUrl = process.env.APP_URL;
 
       const info = await this.transporter.sendMail({
         from: process.env.SMTP_USER,
@@ -60,7 +60,7 @@ export class EmailService {
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; text-align: center;">
             <h1>Welcome to ZOne, ${user.display_name}!</h1>
             <p>Please verify your email by clicking the link below:</p>
-            <a href="${appUrl}/auth/email/verify?token=${validationToken}&email=${user.email}"
+            <a href="${appUrl}/auth/email/verify/${validationToken}/${user.email}"
               style="display: inline-block;
                   padding: 10px 20px;
                   background-color:rgb(96, 29, 160);
