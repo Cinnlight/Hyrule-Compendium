@@ -28,7 +28,7 @@ export function CommentFactory(sequelize: Sequelize): typeof Comments {
             id: {
                 type: DataTypes.UUID,
                 primaryKey: true,
-                defaultValue: uuidv4(),
+                defaultValue: () => uuidv4(),
             },
             page_id: {
                 type: DataTypes.UUID,

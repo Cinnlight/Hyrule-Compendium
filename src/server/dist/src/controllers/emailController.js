@@ -7,9 +7,9 @@ class EmailController {
         this.emailVerificationRequest = this.emailVerificationRequest.bind(this);
     }
     emailVerificationCallback = async (req, res) => {
-        const token = req.query.token;
-        const email = req.query.email;
-        const BASE_URL = process.env.NODE_ENV === 'production' ? process.env.BASE_URL : 'http://localhost:3000';
+        const token = req.params.token;
+        const email = req.params.email;
+        const BASE_URL = process.env.NODE_ENV === 'production' ? process.env.APP_URL : 'http://localhost:3000';
         if (!token || !email) {
             res.status(400).json({
                 success: false,
@@ -56,22 +56,20 @@ class EmailController {
             return;
         }
     };
-    async emailVerificationRequest(req, res) {
+    emailVerificationRequest = async (req, res) => {
         try {
-            const result = await this.emailService.sendEmailVerification(req.body.email);
+            const { user } = req.body;
+            const result = await this.emailService.sendEmailVerification(user);
             if (result.success) {
                 res.json(result);
-                return true;
+                return;
             }
             res.status(500).json(result);
         }
         catch (error) {
             console.error('Email verification error:', error);
+            res.status(500).json({ success: false, error: 'Failed to send verification email' });
         }
-        finally {
-            return false;
-        }
-    }
-    ;
+    };
 }
 export default EmailController;

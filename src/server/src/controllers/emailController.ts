@@ -11,9 +11,9 @@ class EmailController {
     }
 
     emailVerificationCallback = async (req: Request, res: Response): Promise<void> => {
-        const token = req.query.token as string;
-        const email = req.query.email as string;
-        const BASE_URL = process.env.NODE_ENV === 'production' ? process.env.BASE_URL as string : 'http://localhost:3000';
+        const token = req.params.token as string;
+        const email = req.params.email as string;
+        const BASE_URL = process.env.NODE_ENV === 'production' ? process.env.APP_URL as string : 'http://localhost:3000';
 
         if (!token || !email) {
             res.status(400).json({
