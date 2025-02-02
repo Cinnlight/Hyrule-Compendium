@@ -4,14 +4,16 @@ import { v4 as uuidv4 } from 'uuid';
 interface CommentReactionsAttributes {
     comment_id: string;
     reaction_id: number;
+    user_id: string; // added field
     count: number;
 }
 
-interface CommentReactionsCreationAttributes extends Optional<CommentReactionsAttributes, "comment_id" | "reaction_id"> {}
+interface CommentReactionsCreationAttributes extends Optional<CommentReactionsAttributes, "comment_id" | "reaction_id" | "user_id"> {}
 
 export class CommentReactions extends Model<CommentReactionsAttributes, CommentReactionsCreationAttributes> implements CommentReactionsAttributes {
     declare comment_id: string;
     declare reaction_id: number;
+    declare user_id: string; // added field
     declare count: number;
 }
 
@@ -29,6 +31,14 @@ export function CommentReactionsFactory(sequelize: Sequelize): typeof CommentRea
             reaction_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
+            },
+            user_id: {
+                type: DataTypes.UUID,
+                allowNull: false,
+                references: {
+                    model: 'Users',
+                    key: 'id'
+                }
             },
             count: {
                 type: DataTypes.INTEGER,
