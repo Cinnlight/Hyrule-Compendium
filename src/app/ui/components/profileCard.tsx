@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import auth from './auth.js';
+import api from '../../lib/api';
 
 interface User {
     display_name: string;
@@ -10,6 +10,10 @@ interface User {
     avatar_url: string;
     email_val: boolean;
     created_at: string;
+}
+
+interface Comment {
+
 }
 
 // Profile card component example. need to get correct route and data for each user profile
@@ -20,25 +24,12 @@ export default function ProfileCard() {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const token = auth();
-            if (token) {
-                const response = await fetch(`/api/user/:userId/allcomments`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const data = await response.json();
-
-                // store only necessary fields in state
+            try {
+                const { data } = await api.get(`/api/user/:userId/`);
+                // take destructured data and save to state
                 setUser(data);
-            } else {
-                console.log('Error fetching User:', error);
-                setError('Error fetching User');
+            } catch (error){
+                    setError('Error fetching user profile');
             }
         };
 
