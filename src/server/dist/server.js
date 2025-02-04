@@ -2,6 +2,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import routes from './src/routes/index.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // Global handler for unhandled promise rejections
 process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection at:', promise, 'reason:', reason);
@@ -18,6 +22,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
+});
+// Serve static files
+app.use(express.static(path.join(__dirname, '../public_html')));
+// Serve index.html for all routes not handled by the API
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public_html/index.html'));
 });
 // Routes
 app.use('/', routes);

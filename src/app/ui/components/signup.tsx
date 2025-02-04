@@ -2,7 +2,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface SignupProps {
     onRegistrationSuccess: () => void;
@@ -14,7 +13,6 @@ const Signup: React.FC<SignupProps> = ({ onRegistrationSuccess }) => {
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
-    const router = useRouter();
 
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
 

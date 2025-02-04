@@ -5,23 +5,23 @@ import 'material-icons/iconfont/material-icons.css';
 import "./ui/globals.css";
 import Nav from "./ui/components/nav";
 
-export const roboto = Roboto ({
+const roboto = Roboto({
   weight: ['400', '700'],
   subsets: ['latin'],
   display: 'swap',
 });
 
-export const robotoSlab = Roboto_Slab ({
+const robotoSlab = Roboto_Slab({
   subsets: ['latin'],
   display: 'swap',
 });
 
-export const smoochSans = Smooch_Sans ({
+const smoochSans = Smooch_Sans({
   subsets: ['latin'],
   display: 'swap',
 });
 
-export const firaCode = Fira_Code ({
+const firaCode = Fira_Code({
   subsets: ['latin'],
   display: 'swap',
 });
@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={roboto.className}>
       <body>
         <Nav />
         {children}
