@@ -1,4 +1,6 @@
 // app/ui/components/searchbar.tsx
+'use client';
+
 export default function Search() {
     return (
         <li id="searchBar">
