@@ -2,13 +2,19 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-const Signup: React.FC = () => {
+interface SignupProps {
+    onRegistrationSuccess: () => void;
+}
+
+const Signup: React.FC<SignupProps> = ({ onRegistrationSuccess }) => {
     const [email, setEmail] = useState<string>('');
     const [display_name, setDisplayName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
 
@@ -56,7 +62,7 @@ const Signup: React.FC = () => {
             setPassword('');
             setError(null);
 
-            window.location.href = '/login';
+            onRegistrationSuccess();
 
             // Other actions here. (e.g. save token to localStorage, etc.)
         } catch (err: any) {
