@@ -16,7 +16,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ page_id, onCommentSubmit}) =>
     const [error, setError] = useState<string | null>(null); //state for error message
 
     // hadle change in the input field
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setCommentText(event.target.value);
     };
 
@@ -61,17 +61,16 @@ const CommentForm: React.FC<CommentFormProps> = ({ page_id, onCommentSubmit}) =>
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor='commentText'>Add a Comment</label>
-                    <input
-                        id='commentText'
-                        type='text'
-                        value={commentText}
-                        onChange={handleInputChange}
-                        placeholder='Type your comment here...'
-                        disabled={isLoading}
-                    />
-                </div>
+                <label htmlFor='commentText'>Add a Comment</label>
+                <textarea
+                    id='commentText'
+                    rows={4}
+                    cols={50}
+                    value={commentText}
+                    onChange={handleInputChange}
+                    placeholder='Type your comment here...'
+                    disabled={isLoading}
+                />
                 <div>
                     <button type='submit' disabled={isLoading}>
                         {isLoading ? 'Submitting...' : 'Submit Comment'}
