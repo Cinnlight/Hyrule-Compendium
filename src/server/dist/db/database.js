@@ -17,6 +17,7 @@ import * as pagesSeed from "../src/sequelize_seeds/pagesSeed.js";
 import * as contentSeed from "../src/sequelize_seeds/contentSeed.js";
 import * as commentsSeed from "../src/sequelize_seeds/commentsSeed.js";
 import * as commentReactionsSeed from "../src/sequelize_seeds/commentReactionsSeed.js";
+import * as pageCategoriesSeed from "../src/sequelize_seeds/pageCategoriesSeed.js";
 const adminSequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
     host: process.env.DB_HOST,
     dialect: "postgres",
@@ -73,6 +74,8 @@ export async function initializeDatabase(reseed = true) {
             await categoriesSeed.up(queryInterface);
             console.log("Seeding pages...");
             await pagesSeed.up(queryInterface);
+            console.log("Seeding page categories...");
+            await pageCategoriesSeed.up(queryInterface);
             console.log("Seeding content...");
             await contentSeed.up(queryInterface);
             console.log("Seeding comments...");

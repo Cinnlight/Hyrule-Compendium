@@ -15,6 +15,14 @@ export function CommentReactionsFactory(sequelize) {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        user_id: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: 'Users',
+                key: 'id'
+            }
+        },
         count: {
             type: DataTypes.INTEGER,
             allowNull: false,
