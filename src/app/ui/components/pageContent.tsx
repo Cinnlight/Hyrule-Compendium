@@ -3,23 +3,25 @@
 
 import { useEffect, useState } from 'react';
 import api from '../../lib/api.js';
+import { usePageContext } from '../../lib/pageContext.js';
 
-interface PageContentProps {
-    pageId: number;
-}
 
-const PageContent: React.FC<PageContentProps> = ({ pageId }) => {
+const PageContent = () => {
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+
+    const { selectedPageId } = usePageContext(); //get the context value
+    console.log(selectedPageId);
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             setError(null);
-            console.log(`Fetching data for page ${pageId}`); // optional for bugfixing
+            //console.log(`Fetching data for page ${pageId}`); // optional for bugfixing
             try {
-                const response = await api.post(`/api/pages/info`, {pageId}); //fetch data for selected page
+                console.log('Sending pageID:', selectedPageId);
+                const response = await api.post(`/api/pages/info`, {pageID: selectedPageId}); //fetch data for selected page
                 setData(response.data);
                 console.log(response.data); // optional for bugfixing
             } catch (err: any) {
@@ -30,7 +32,7 @@ const PageContent: React.FC<PageContentProps> = ({ pageId }) => {
         };
 
         fetchData();
-    }, [pageId]);
+    }, [selectedPageId]);
 
     return (
         <div>

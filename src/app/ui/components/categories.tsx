@@ -7,12 +7,12 @@ import { useRouter } from 'next/navigation';
 import { usePageContext } from '../../lib/pageContext';
 
 interface Category {
-    id: number;
+    id: string;
     name: string;
 }
 
 interface Page {
-    id: number;
+    id: string;
     title: string;
 }
 
@@ -32,7 +32,7 @@ const CategoriesPage = () => {
                 const response = await api.get('/api/pages/categories');
 
                 setCategories(response.data);
-                // console.log(response.data); // optional log for debugging
+                //console.log(response.data); // optional log for debugging
             } catch (error) {
                 setError('Error fetching categories');
                 console.error(error);
@@ -42,20 +42,20 @@ const CategoriesPage = () => {
         fetchCategories();
     }, []);
 
-    const handleCategoryClick = async (categoryId: number) => {
+    const handleCategoryClick = async (categoryId: string) => {
         // console.log(categoryId); //optional debugging
         try{
             const response = await api.post('/api/pages/category', { categoryId });
             setSelectedCategory(response.data);
-            console.log(response.data); // optional log for debugging
+            //console.log(response.data); // optional log for debugging
         } catch (error) {
             setError('Error fetching category pages');
             console.error(error);
         }
     };
 
-    const handlePageClick = async (pageId: number) => {
-        // console.log(pageId); //optional debugging 
+    const handlePageClick = async (pageId: string) => {
+         console.log(pageId); //optional debugging 
         try{
             setSelectedPageId(pageId); //update the context
             router.push(`/compendium/page/`); // navigate to the page

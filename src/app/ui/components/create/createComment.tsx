@@ -7,7 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 
 interface CommentFormProps {
     page_id: string;
-    onCommentSubmit: (newComment: string) => void; //callback to update the ui with the new comment
+    onCommentSubmit?: (newComment: string) => void; //callback to update the ui with the new comment
 }
 
 const CommentForm: React.FC<CommentFormProps> = ({ page_id, onCommentSubmit}) => {
@@ -24,24 +24,11 @@ const CommentForm: React.FC<CommentFormProps> = ({ page_id, onCommentSubmit}) =>
     const handleSubmit = async (event: React.FormEvent) => {
        
        // used to get user_id from the token
-        const token = localStorage.getitem('token');
-        let user_id: number;
+        // const token = localStorage.getitem('token');
 
-        if (token) {
-            try {
-                const decoded: { userId?: number } = jwtDecode(token);
-                if (decoded.userId !== undefined) {
-                    user_id = decoded.userId;
-                } else {
-                    setError('Authentication error. Please log in again.');
-                    return;
-                }
-            } catch (err) {
-                console.error('Invalid token:', err);
-                setError('Authentication error. Please log in again.');
-                return;
-            } 
-        }
+        // const decoded = jwtDecode(token);
+        // const user_id = decoded.id
+        const user_id = 'test';
         
         event.preventDefault();
         if (commentText.trim() === '') {
@@ -61,7 +48,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ page_id, onCommentSubmit}) =>
 
             //if the request is suxxessful, call the onCommentSubmit callback to update the ui
             if (response.status === 200) {
-                onCommentSubmit(commentText); // pass the new comment to the parent to update the UI
+                onCommentSubmit && onCommentSubmit(commentText); // pass the new comment to the parent to update the UI
                 setCommentText(''); //clear the input field
             }
         } catch (err: any) {

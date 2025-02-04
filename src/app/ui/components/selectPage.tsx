@@ -5,13 +5,13 @@ import { useState, useEffect } from 'react';
 
 interface Content {
     id: number;
-    page_id: number;
+    page_id: string;
     content: string;
     version: number;
 }
 
 const PageContent = () => {
-    const [selectedPage, setSelectedPage] = useState<number>(1); // Default to page 1
+    const [selectedPage, setSelectedPage] = useState<string>(''); // Default to page 1
     const [content, setContent] = useState<Content | null>(null);
     const [error, setError] = useState<string | null>(null);
 
@@ -37,7 +37,7 @@ const PageContent = () => {
         fetchContent();
     }, [selectedPage]); // Fetch content whenever the selectedPage changes
 
-    const handlePageSelection = (pageId: number) => {
+    const handlePageSelection = (pageId: string) => {
         setSelectedPage(pageId);
     };
 

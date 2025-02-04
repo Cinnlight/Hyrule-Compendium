@@ -4,8 +4,8 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface PageContextType {
-    selectedPageId: number;
-    setSelectedPageId: (pageId: number) => void;
+    selectedPageId: string;
+    setSelectedPageId: (pageId: string) => void;
 }
 
 // define the context
@@ -13,7 +13,7 @@ const PageContext = createContext<PageContextType | undefined>(undefined);
 
 // define the provider
 export const PageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [selectedPageId, setSelectedPageId] = useState<number>(0);
+    const [selectedPageId, setSelectedPageId] = useState<string>('');
 
     return (
         <PageContext.Provider value={{ selectedPageId, setSelectedPageId }}>
