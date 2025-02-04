@@ -1,28 +1,32 @@
 // ui/components/protecedRoute.tsx
 "use client";
 
-import { ComponentType, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 
-const ProtectedRoute = <P extends Object> (WrappedComponent: ComponentType<P>) => {
-    const Wrapper = (props: P) => {
+interface ProtectedRouteProps {
+    children: ReactNode;
+}
+
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
         const router = useRouter();
-        const [isAuthenticated, setIsAuthenticated] = useState(false);
+        const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
         useEffect(() => {
             // Check if user is authenticated
             const token = localStorage.getItem('token');
             if (!token) {
-                router.push('/login');
+                setIsAuthenticated(false);
+                router.replace('/login');
             } else {
                 setIsAuthenticated(true);
             }
         }, []);
 
-        // If user is authenticated, return the WrappedComponent
-        return isAuthenticated ? <WrappedComponent {...props} /> : null;
-    };
-    return Wrapper;
-};
+        if (isAuthenticated === null) {
+            return <p>Loading...</p> //Shows loading message while checking authentication. Can be changed to a spinner or other loading indicator.
+        }
 
-export default ProtectedRoute;
+        // If user is authenticated, return the WrappedComponent
+        return isAuthenticated ? <>{children}</> : null;
+    };
