@@ -5,21 +5,21 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const Login: React.FC = () => {
-    const [login, setLogin] = useState<string>('');
+    const [display_name, setDisplayName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!login || !password) {
+        if (!display_name || !password) {
             setError('Please fill in all fields');
             return;
         }
 
         // Convert what could be display_name to login lowercase and remove whitespace
         // Allowing the user to log in without case sensitivity
-        login.toLowerCase().trim();
+        const login = display_name.toLowerCase().trim();
 
         try {
             const response = await fetch('/auth/login' , {
@@ -35,7 +35,7 @@ const Login: React.FC = () => {
             const data = await response.json();
             // console.log("login successful", data); // check to see if we need to remove this line upon deployment
 
-            setLogin('');
+            setDisplayName('');
             setPassword('');
             setError(null);
 
@@ -58,8 +58,8 @@ const Login: React.FC = () => {
                         type="displayName"
                         id="displayName"
                         className="loginemail"
-                        value={login}
-                        onChange={(e) => setLogin(e.target.value)}
+                        value={display_name}
+                        onChange={(e) => setDisplayName(e.target.value)}
                         placeholder="Enter your Display Name"
                         required
                     />
