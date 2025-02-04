@@ -5,33 +5,37 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const Login: React.FC = () => {
-    const [displayName, setDisplayName] = useState<string>('');
+    const [login, setLogin] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!displayName || !password) {
+        if (!login || !password) {
             setError('Please fill in all fields');
             return;
         }
 
+        // Convert what could be display_name to login lowercase and remove whitespace
+        // Allowing the user to log in without case sensitivity
+        login.toLowerCase().trim();
+
         try {
-            const response = await fetch('auth/login' , {
+            const response = await fetch('/auth/login' , {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ displayName, password }),
+                body: JSON.stringify({ login, password }),
             })
             if (!response.ok) {
                 throw new Error('Invalid login credentials');
             }
             const data = await response.json();
-            console.log("login successful", data); // check to see if we need to remove this line upon deployment
+            // console.log("login successful", data); // check to see if we need to remove this line upon deployment
 
-            setDisplayName('');
+            setLogin('');
             setPassword('');
             setError(null);
 
@@ -54,8 +58,8 @@ const Login: React.FC = () => {
                         type="displayName"
                         id="displayName"
                         className="loginemail"
-                        value={displayName}
-                        onChange={(e) => setDisplayName(e.target.value)}
+                        value={login}
+                        onChange={(e) => setLogin(e.target.value)}
                         placeholder="Enter your Display Name"
                         required
                     />
