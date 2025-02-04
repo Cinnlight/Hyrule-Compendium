@@ -29,8 +29,12 @@ const Signup: React.FC = () => {
             setError('Password must contain at least one number, one uppercase letter, one lowercase letter, and be at least 8 characters long');
             return;
         }
+
+        setDisplayName(display_name.trim());
+        setEmail(email.trim());
+
         try {
-            const response = await fetch('auth/register', {
+            const response = await fetch('/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,6 +55,8 @@ const Signup: React.FC = () => {
             setConfirmPassword('');
             setPassword('');
             setError(null);
+
+            window.location.href = '/login';
 
             // Other actions here. (e.g. save token to localStorage, etc.)
         } catch (err: any) {

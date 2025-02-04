@@ -2,6 +2,9 @@
 "use client";
 
 export default function Auth() {
-    const token = localStorage.getItem("token");
-    return !!token;   //returns token if it exists, false otherwise
-};
+    if (typeof window !== 'undefined') {
+        const token = localStorage.getItem("token");
+        return !!token;
+    }
+    return false;
+}
