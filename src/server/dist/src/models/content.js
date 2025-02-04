@@ -7,10 +7,10 @@ export function ContentFactory(sequelize) {
         id: {
             type: DataTypes.UUID,
             primaryKey: true,
-            defaultValue: uuidv4(),
+            defaultValue: () => uuidv4(),
         },
         page_id: {
-            type: DataTypes.UUID, // Changed from DataTypes.INTEGER to DataTypes.UUID
+            type: DataTypes.UUID,
             allowNull: false,
             references: {
                 model: 'Pages',
