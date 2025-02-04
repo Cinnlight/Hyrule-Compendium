@@ -3,13 +3,12 @@ import Categories from '../ui/components/categories';
 import ProtectedRoute from "../ui/components/protectedRoute";
 
 
-const Compendium = () => {
+export default function Compendium() {
     return (
-        <div>
+        <ProtectedRoute>
             <h1>Compendium</h1>
             <Categories />
-        </div>
+        </ProtectedRoute>
     );
 }
 
-export default ProtectedRoute(Compendium);
