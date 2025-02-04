@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import CommentForm from './create/createComment';
 
-const ComenSection: React.FC = () => {
+const CommentSection: React.FC = () => {
     const [comments, setComments] = useState<string[]>([]);
 
     const handleNewComment = (newComment: string) => {
@@ -24,4 +24,4 @@ const ComenSection: React.FC = () => {
     );
 };
 
-export default ComenSection;
+export default CommentSection;

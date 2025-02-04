@@ -1,26 +1,33 @@
-// ui/cpmonents/pageContent.tsx
+// ui/components/pageContent.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
 import api from '../../lib/api.js';
+import { usePageContext } from '../../lib/pageContext.js';
 
-interface PageContentProps {
-    pageId: number;
-}
 
-const PageContent: React.FC<PageContentProps> = ({ pageId }) => {
+const PageContent = () => {
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
+    const { selectedPageId } = usePageContext(); //get the context value
+    // console.log('Test for selectedPageId provider:' selectedPageId); //optional for bugfixing
+
     useEffect(() => {
+        if (!selectedPageId) {
+            setData(null);
+            return;
+        }
         const fetchData = async () => {
             setLoading(true);
             setError(null);
-
+            //console.log(`Fetching data for page ${pageId}`); // optional for bugfixing
             try {
-                const response = await api.get(`/api/content/${pageId}`); //fetch data for selected page
+                console.log('Sending pageID:', selectedPageId);
+                const response = await api.post(`/api/pages/info`, {pageId: selectedPageId}); //fetch data for selected page
                 setData(response.data);
+                console.log(response.data); // optional for bugfixing
             } catch (err: any) {
                 setError('Failed to fetch page');
             } finally {
@@ -29,7 +36,7 @@ const PageContent: React.FC<PageContentProps> = ({ pageId }) => {
         };
 
         fetchData();
-    }, [pageId]);
+    }, [selectedPageId]);
 
     return (
         <div>
@@ -40,11 +47,22 @@ const PageContent: React.FC<PageContentProps> = ({ pageId }) => {
 
             {data && (
                 <div>
-                    <ul>
-                        {data.items?.map((item:any, index: number) =>(
-                            <li key={index}>{item.name}</li>    
-                        ))}
-                    </ul>
+                    <h1>{data.title}</h1>
+                    <div>
+                        <p>Page creation: {data.created_at}</p>
+                        <p>Last updated: {data.updated_at}</p>
+                        <p>Page contributers:{""} 
+                            {data.contributors.map((item: any, index:number) => (
+                                <span key={index}>{item.display_name}</span>
+                            ))}
+                        </p>
+                    </div>
+                    <div>
+                        <section>{data.contents.map((contentItem: any, index: number) => (
+                            <p key={index}>{contentItem.content}</p>
+                            ))}
+                        </section>
+                    </div>
                 </div>
             )}
         </div>

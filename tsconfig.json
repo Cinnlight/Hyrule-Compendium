@@ -28,7 +28,8 @@
   },
   "include": [
     "./**/*",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "public_html/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

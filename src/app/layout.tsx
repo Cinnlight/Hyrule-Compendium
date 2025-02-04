@@ -1,9 +1,11 @@
 // app/layout.tsx
+
 import type { Metadata } from "next";
 import { Roboto, Roboto_Slab, Smooch_Sans, Fira_Code } from 'next/font/google';
 import 'material-icons/iconfont/material-icons.css';
 import "./ui/globals.css";
 import Nav from "./ui/components/nav";
+import { PageProvider } from "./lib/pageContext";
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -39,8 +41,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={roboto.className}>
       <body>
-        <Nav />
-        {children}
+        <PageProvider>
+          <Nav />
+          {children}
+        </PageProvider>
       </body>
     </html>
   );
