@@ -43,16 +43,22 @@ export default function ProfileCard() {
             {user ? (
                 <>
                     <span className="avatar-left">[</span>
-                    <img className="avatar" src="./default.gif" />
+                    <img className="avatar" src={user.avatar_url} alt={`{user.display_name}'s avatar`} />
                     <span className="avatar-right">]</span>
                     <h1>{user.display_name}'s Profile</h1>
                     <p>
                         <i className="material-icons-round" title="email verified">verified</i> (or <i className="material-icons-round" title="email not verified">cancel</i>)
                     </p>
-                    <img src={user.avatar_url} alt={`{user.display_name}'s avatar'`}/>
-                    <p>Email: {user.email}</p>
-                    <p>Member since: {user.created_at}</p>
-
+                    <div className="userDetails">
+                        <p>
+                            <span className="material-icons-round">email</span>
+                            Email: {user.email}
+                        </p>
+                        <p>
+                            <span className="material-icons-round">event</span>
+                            Member since: {user.created_at}
+                        </p>
+                    </div>
                 </>
             ) : (
                 <p>Loading user Profile...</p>
