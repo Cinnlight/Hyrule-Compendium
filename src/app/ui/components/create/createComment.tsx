@@ -3,6 +3,7 @@
 
 import { useState, } from 'react';
 import api from '../../../lib/api.js';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 interface CommentFormProps {
     page_id: string;
@@ -21,6 +22,12 @@ const CommentForm: React.FC<CommentFormProps> = ({ page_id, onCommentSubmit}) =>
 
     // handle form submission
     const handleSubmit = async (event: React.FormEvent) => {
+       
+       // used to get user_id from the token
+        const token = localStorage.getitem('token');
+            const decoded = jwt.decode(token) as JwtPayload | null;
+        const user_id = decoded?.userId;
+        
         event.preventDefault();
         if (commentText.trim() === '') {
             setError( 'Please enter a comment if you wish to submit one.');
@@ -31,9 +38,10 @@ const CommentForm: React.FC<CommentFormProps> = ({ page_id, onCommentSubmit}) =>
         setError(null);
 
         try{
-            const response = await api.post('/api/comments', {
+            const response = await api.post('/api/comments/create', {
                 page_id, 
-                comment: commentText
+                comment: commentText,
+                user_id,
             });
 
             //if the request is suxxessful, call the onCommentSubmit callback to update the ui
