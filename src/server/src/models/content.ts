@@ -37,7 +37,7 @@ export function ContentFactory(sequelize: Sequelize): typeof Content {
                 defaultValue: () => uuidv4(),
             },
             page_id: {
-                type: DataTypes.UUID, // Changed from DataTypes.INTEGER to DataTypes.UUID
+                type: DataTypes.UUID,
                 allowNull: false,
                 references: {
                     model: 'Pages',

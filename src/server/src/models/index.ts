@@ -54,13 +54,12 @@ Content.belongsTo(Pages, { foreignKey: 'page_id', onDelete: 'CASCADE' });
 Content.belongsTo(Users, { foreignKey: 'verified_by' });
 
 // Content Contributors Relationships
-Content.belongsToMany(Users, { foreignKey: 'content_id', otherKey: 'user_id', through: ContentContributors });
-Users.belongsToMany(Content, { foreignKey: 'user_id', otherKey: 'content_id', through: ContentContributors, onDelete: 'CASCADE' });
+Content.belongsToMany(Users, { as: 'contributors', foreignKey: 'content_id', otherKey: 'user_id', through: ContentContributors });
+Users.belongsToMany(Content, { as: 'contentContributed', foreignKey: 'user_id', otherKey: 'content_id', through: ContentContributors, onDelete: 'CASCADE' });
 
-PageCategories.belongsTo(Categories, { foreignKey: 'id' });
-Categories.belongsTo(PageCategories, { foreignKey: 'category_id', onDelete: 'CASCADE' });
-
-PageCategories.belongsTo(Pages, { foreignKey: 'id' });
+// PageCategories associations
+PageCategories.belongsTo(Categories, { foreignKey: 'category_id' });
+PageCategories.belongsTo(Pages, { foreignKey: 'page_id', as: 'page' });
 
 // Comment Reactions Associations
 Comments.belongsToMany(Reactions, { through: CommentReactions, foreignKey: 'comment_id', onDelete: 'CASCADE' });
@@ -76,6 +75,7 @@ export {
   Pages,
   Users,
   Reactions,
-  CommentReactions
+  CommentReactions,
+  ContentContributors
 };
 
