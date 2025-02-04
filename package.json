@@ -6,7 +6,8 @@
     "dev": "concurrently \"cd src/server && npm run dev\" \"next dev --turbopack\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "packages": "npm install && cd src/server && npm install"
   },
   "dependencies": {
     "axios": "^1.7.9",
