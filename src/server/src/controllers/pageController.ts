@@ -69,7 +69,8 @@ class PageController {
                 created_at: page.get('created_at'),
                 updated_at: page.get('updated_at'),
                 contributors,
-                comments
+                comments,
+                contents: contentsWithContributors
             });
         } catch (error) {
             console.error(error);
