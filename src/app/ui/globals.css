@@ -74,6 +74,7 @@ nav {
         align-items:center;
         transition-duration:0.5s;
         font-weight:300;
+        font-size:0;
 
         span {
           margin-right:0.5rem;
@@ -81,6 +82,7 @@ nav {
       }
 
       a:hover {
+        font-size:1.25rem;
         text-shadow: 0 0 0.8rem var(--blurple),
                      0 0 0.2rem var(--foreground),
                      0 0 0.5rem var(--foreground),
