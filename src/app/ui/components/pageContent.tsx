@@ -17,10 +17,11 @@ const PageContent: React.FC<PageContentProps> = ({ pageId }) => {
         const fetchData = async () => {
             setLoading(true);
             setError(null);
-
+            console.log(`Fetching data for page ${pageId}`); // optional for bugfixing
             try {
-                const response = await api.post(`/api/page/info`, {page_id}); //fetch data for selected page
+                const response = await api.post(`/api/pages/info`, {pageId}); //fetch data for selected page
                 setData(response.data);
+                console.log(response.data); // optional for bugfixing
             } catch (err: any) {
                 setError('Failed to fetch page');
             } finally {

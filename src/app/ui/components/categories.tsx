@@ -3,16 +3,27 @@
 
 import { useState, useEffect } from 'react';
 import api from '../../lib/api';
+import { useRouter } from 'next/navigation';
+import { usePageContext } from '../../lib/pageContext';
 
 interface Category {
     id: number;
     name: string;
 }
 
+interface Page {
+    id: number;
+    title: string;
+}
+
 const CategoriesPage = () => {
     const [categories, setCategories] = useState<Category[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<Page[]>([]);
     const [error, setError] = useState<string | null>(null);
+
+    const router = useRouter();
+
+    const { setSelectedPageId } = usePageContext(); //get the context function
 
     useEffect(() => {
         // Fetch categories from the server
@@ -32,15 +43,27 @@ const CategoriesPage = () => {
     }, []);
 
     const handleCategoryClick = async (categoryId: number) => {
-        console.log(categoryId); //optional debugging
+        // console.log(categoryId); //optional debugging
         try{
             const response = await api.post('/api/pages/category', { categoryId });
             setSelectedCategory(response.data);
+            console.log(response.data); // optional log for debugging
         } catch (error) {
             setError('Error fetching category pages');
             console.error(error);
         }
     };
+
+    const handlePageClick = async (pageId: number) => {
+        // console.log(pageId); //optional debugging 
+        try{
+            setSelectedPageId(pageId); //update the context
+            router.push(`/compendium/page/`); // navigate to the page
+        } catch (error) {
+            setError('Error setting page info');
+            console.error(error);
+        }
+    }
 
     return (
         <div>
@@ -63,13 +86,17 @@ const CategoriesPage = () => {
             </div>
 
             {/* Display selected category details */}
-            {selectedCategory && (
-                <div>
-                    <h2>{selectedCategory.name}</h2>
-                    {/* You can add more details here for the selected category */}
-                    <p>Details about {selectedCategory.name}.</p>
-                </div>
-            )}
+            <div>
+                {selectedCategory.map((page) => (
+                    <button
+                        key={page.id}
+                        onClick={() => handlePageClick(page.id)}
+                        className={""}
+                        >
+                            {page.title}
+                    </button>
+                ))}
+            </div>
         </div>
     );
 };
