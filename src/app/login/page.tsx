@@ -6,13 +6,13 @@ import { useState } from 'react';
 import styles from './page.module.css';
 
 export default function LoginPage() {
-    const [showSignup, setShowSignup] = useState(false);  
-    return (
-        <main className={styles.login}>
-          {showSignup? <Signup />: <Login />}
-          <button onClick={() => setShowSignup(!showSignup)}>
-            {showSignup? 'Already have an account? Login!': "Don't have an account? Register!"}
-          </button>
-        </main>
-    );
+  const [showSignup, setShowSignup] = useState(false);  
+  return (
+      <main className={styles.login}>
+        {showSignup ? <Signup onRegistrationSuccess={() => setShowSignup(false)} /> : <Login />}
+        <button onClick={() => setShowSignup(!showSignup)}>
+          {showSignup ? 'Already have an account? Login!' : "Don't have an account? Register!"}
+        </button>
+      </main>
+  );
 }
