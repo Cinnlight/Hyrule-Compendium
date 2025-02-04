@@ -31,9 +31,11 @@ body {
 body {
   color: var(--foreground);
   background: var(--background-gradient), var(--background);
+  background-repeat:no-repeat;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height:100%;
 }
 
 * {
