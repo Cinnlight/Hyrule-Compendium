@@ -3,7 +3,7 @@
 
 import { useState, } from 'react';
 import api from '../../../lib/api.js';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import { jwtDecode } from 'jwt-decode';
 
 interface CommentFormProps {
     page_id: string;
@@ -25,8 +25,23 @@ const CommentForm: React.FC<CommentFormProps> = ({ page_id, onCommentSubmit}) =>
        
        // used to get user_id from the token
         const token = localStorage.getitem('token');
-            const decoded = jwt.decode(token) as JwtPayload | null;
-        const user_id = decoded?.userId;
+        let user_id: number;
+
+        if (token) {
+            try {
+                const decoded: { userId?: number } = jwtDecode(token);
+                if (decoded.userId !== undefined) {
+                    user_id = decoded.userId;
+                } else {
+                    setError('Authentication error. Please log in again.');
+                    return;
+                }
+            } catch (err) {
+                console.error('Invalid token:', err);
+                setError('Authentication error. Please log in again.');
+                return;
+            } 
+        }
         
         event.preventDefault();
         if (commentText.trim() === '') {
