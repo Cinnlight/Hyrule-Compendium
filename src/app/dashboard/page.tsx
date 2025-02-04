@@ -5,13 +5,12 @@ import ProtectedRoute from "../ui/components/protectedRoute";
 import Link from 'next/link';
 
 
-const Dashboard = () => {
+export default function Dashboard() {
     return (
-        <div>
+        <ProtectedRoute>
             <h1>Dashboard</h1>
             <Link href="/profile">Profile</Link>
-        </div>
+        </ProtectedRoute>
     );
 }
 
-export default ProtectedRoute(Dashboard);
