@@ -1,4 +1,4 @@
-// ui/cpmonents/pageContent.tsx
+// ui/components/pageContent.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -19,7 +19,7 @@ const PageContent: React.FC<PageContentProps> = ({ pageId }) => {
             setError(null);
 
             try {
-                const response = await api.get(`/api/content/${pageId}`); //fetch data for selected page
+                const response = await api.post(`/api/page/info`, {page_id}); //fetch data for selected page
                 setData(response.data);
             } catch (err: any) {
                 setError('Failed to fetch page');
