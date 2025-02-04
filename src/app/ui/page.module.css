@@ -1,10 +1,4 @@
 .page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
 
   display: grid;
   grid-template-rows: 1px 1fr 20px;
@@ -13,17 +7,6 @@
   min-height: 100vh;
   padding: 0;
   gap: 0;
-}
-
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
 }
 
 .main {
@@ -36,7 +19,7 @@
 }
 
 .main h1 {
-  font-size: 2.8rem;
+  font-size: 4rem;
   letter-spacing: 0.1rem;
   background:url('/hero.png');
   width:100%;
@@ -45,6 +28,8 @@
   text-align:center;
   background-size:cover;
   min-height:200px;
+  text-shadow: 0 0 0.8rem var(--blurple), 0 0 0.2rem var(--background), 0 0 0.5rem var(--background), 0 0 0.6rem var(--background);
+  box-shadow: 0px 5px 30px var(--blurple);
 }
 
 a.primary {
