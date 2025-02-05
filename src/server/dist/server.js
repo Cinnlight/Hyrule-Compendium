@@ -28,7 +28,7 @@ app.use('/', routes);
 // Serve static files
 app.use(express.static(path.join(__dirname, '../public_html')));
 // Serve index.html for all routes not handled by the API
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../public_html/index.html'));
 });
 // Initialize database and start the server

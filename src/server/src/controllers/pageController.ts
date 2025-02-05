@@ -77,6 +77,22 @@ class PageController {
             res.status(500).json({ message: 'Error fetching page info' });
         }
     };
+
+    getMostRecentlyUpdatedPage = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const page = await Pages.findOne({
+                order: [['updated_at', 'DESC']],
+            });
+            if (!page) {
+                res.status(404).json({ message: 'No pages found' });
+                return;
+            }
+            res.json(page);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Error fetching most recently updated page' });
+        }
+    };
 }
 
 export default new PageController();

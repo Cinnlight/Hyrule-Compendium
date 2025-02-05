@@ -35,6 +35,8 @@
 }
 
 .logininput:focus {
+    background:var(--background);
+    color:var(--foreground);
     box-shadow: 0 0 0.8rem var(--blurple),
     0 0 0.2rem var(--foreground),
     0 0 0.5rem var(--foreground),
@@ -59,5 +61,7 @@
 }
 
 .loginbutton:hover {
+    background:var(--translucent-white);
+    color:var(--foreground);
     outline-color:var(--foreground);
 }

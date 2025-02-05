@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Search from './searchbar';
 import ConditionalRender from './conditionalRender';
+import Logout from './logout';
 
 export default function Nav() {
 
@@ -74,14 +75,21 @@ export default function Nav() {
                             <Link
                                 href="/login"
                             >
-                                <span className="material-icons-round">
-                                    login
-                                </span>
-                                Login or Register
+                                <button>
+                                    Login or Register
+                                </button>
                             </Link>
                         </li>
                     }
                 />
+                <ConditionalRender 
+                renderIfTrue={
+                    <li>
+                        <Logout />
+                    </li>
+                }
+                renderIfFalse={null} // no logout button if user is not logged in
+            />
             </ul>
         </nav>
     )

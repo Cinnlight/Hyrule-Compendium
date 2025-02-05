@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import styles from '../../login/page.module.css';
 
 interface SignupProps {
     onRegistrationSuccess: () => void;
@@ -72,13 +73,13 @@ const Signup: React.FC<SignupProps> = ({ onRegistrationSuccess }) => {
             <h1>Register</h1>
             <form onSubmit={handleSubmit}>
                 <div className="login">
-                    <label htmlFor="email" className="loginlabel">
+                    <label htmlFor="email" className={styles.loginlabel}>
                         Email
                     </label>
                     <input
                         type="email"
                         id="email"
-                        className="loginemail"
+                        className={styles.logininput}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your email"
@@ -87,13 +88,13 @@ const Signup: React.FC<SignupProps> = ({ onRegistrationSuccess }) => {
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="display_name" className="loginlabel">
+                    <label htmlFor="display_name" className={styles.loginlabel}>
                         Display Name
                     </label>
                     <input
                         type="text"
                         id="display_name"
-                        className="loginemail"
+                        className={styles.logininput}
                         value={display_name}
                         onChange={(e) => setDisplayName(e.target.value)}
                         placeholder="Enter your Display Name"
@@ -102,13 +103,13 @@ const Signup: React.FC<SignupProps> = ({ onRegistrationSuccess }) => {
                 </div>
                 
                 <div className="mb-4">
-                    <label htmlFor="password" className="loginlabel">
+                    <label htmlFor="password" className={styles.loginlabel}>
                         Password
                     </label>
                     <input
                         type="password"
                         id="password"
-                        className="loginpassword"
+                        className={styles.logininput}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter your password"
@@ -117,13 +118,13 @@ const Signup: React.FC<SignupProps> = ({ onRegistrationSuccess }) => {
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="confirmPassword" className="loginlabel">
+                    <label htmlFor="confirmPassword" className={styles.loginlabel}>
                         Confirm Password
                     </label>
                     <input
                         type="password"
                         id="confirmPassword"
-                        className="loginpassword"
+                        className={styles.logininput}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="Confirm your password"
@@ -131,7 +132,7 @@ const Signup: React.FC<SignupProps> = ({ onRegistrationSuccess }) => {
                     />
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit" className="loginbutton" >Register</button>
+                <button type="submit" className={styles.loginbutton}>Register</button>
             </form>
         </div>
     );

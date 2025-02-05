@@ -9,6 +9,7 @@ const Logout = () => {
     const handleLogout = () => {
         localStorage.removeItem('token');
         router.push('/'); // Redirect to home page
+        router.refresh(); // Refresh the page
     };
 
     return (

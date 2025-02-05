@@ -7,14 +7,15 @@
     display:flex;
     align-items:center;
     justify-content:flex-start;
+    flex-wrap:wrap;
 }
 
-.profile span {
+.profleft, .profright {
     font: 100 108px var(--font-accent);
     margin:0 6px;
 }
 
-.profile img {
+.profav {
     width:64px;
     height:64px;
     object-fit:cover;
@@ -25,9 +26,20 @@
 
 .profile p {
     margin:5px 0 0 10px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    justify-content:center;
 }
 
 .profile p i {
     color:lightgreen;
     font-size:2rem;
+}
+
+.userdetails {
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    margin:10px 0;
 }
