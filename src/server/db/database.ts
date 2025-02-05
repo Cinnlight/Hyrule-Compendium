@@ -46,7 +46,7 @@ const migrator = new Umzug({
 // Initialize the Database
 export async function initializeDatabase() {
   const dbName = process.env.DB_NAME!;
-  const reseed = process.env.DB_RESEED === 'true';
+  const reseed = 'true';
 
   try {
     // Verify database existence
