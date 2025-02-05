@@ -12,7 +12,7 @@ const PageContent = () => {
     const [error, setError] = useState<string | null>(null);
 
     const { selectedPageId } = usePageContext(); //get the context value
-    // console.log('Test for selectedPageId provider:' selectedPageId); //optional for bugfixing
+     console.log('Test for selectedPageId provider:', selectedPageId); //optional for bugfixing
 
     useEffect(() => {
         if (!selectedPageId) {

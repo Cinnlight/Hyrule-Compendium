@@ -10,6 +10,7 @@ const CompendiumPage = () => {
 
     const { selectedPageId } = usePageContext(); // get the context value
     const page_id = selectedPageId;
+    console.log('Test for selectedPageId provider(page route):', selectedPageId); //optional for bugfixing
     return (
         <div>
             {selectedPageId ? <PageContent />: <p>No page selected</p>}
