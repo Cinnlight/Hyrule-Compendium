@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import api from '../../lib/api';
+import styles from '../../profile/page.module.css';
 
 interface User {
     id: any;
@@ -45,9 +46,9 @@ export default function ProfileCard({ id }: { id: any }) {
         <div>
             {user ? (
                 <>
-                    <span className="avatar-left">[</span>
-                    <img className="avatar" src={user.avatar_url ? user.avatar_url : "./default.gif"} alt={`${user.display_name}'s avatar`} />
-                    <span className="avatar-right">]</span>
+                    <span className={styles.profleft}>[</span>
+                    <img className={styles.profav}src={user.avatar_url ? user.avatar_url : "./default.gif"} alt={`${user.display_name}'s avatar`} />
+                    <span className={styles.profright}>]</span>
                     <h1>{user.display_name}'s Profile</h1>
                     <p>
                         {user.email_val ? (
@@ -56,18 +57,18 @@ export default function ProfileCard({ id }: { id: any }) {
                             <i className="material-icons-round" title="email not verified">cancel</i>
                         )}
                     </p>
-                    <div className="userDetails">
+                    <div className={styles.userDetails}>
                         <p>
-                            <i className="material-icons-round">
+                            <i className="material-icons-round" title="User's email address">
                                 email
                             </i>
-                            Email: {user.email}
+                            {user.email}
                         </p>
                         <p>
-                            <i className="material-icons-round">
+                            <i className="material-icons-round" title="User's join date">
                                 event
                             </i>
-                            Member since: {new Date(user.created_at).toLocaleDateString()}
+                            {new Date(user.created_at).toLocaleDateString()}
                         </p>
                     </div>
                 </>
