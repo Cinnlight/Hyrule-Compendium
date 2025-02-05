@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import CommentForm from './create/createComment';
 import { usePageContext } from '../../lib/pageContext';
 import api from '../../lib/api';
+import ReactionButton from './create/reactionButton';
 
 
 const CommentSection: React.FC = () => {
@@ -16,7 +17,7 @@ const CommentSection: React.FC = () => {
         try {
             const response = await api.post('/api/comments/page', { page_id: selectedPageId });
             setComments(response.data);
-            //console.log('Comments called by selectedPageId in <CommoneSection />:', response.data); // optional for bugfixing
+            console.log('Comments called by selectedPageId in <CommentSection />:', response.data); // optional for bugfixing
         } catch (error) {
             console.error('Error fetching comments:', error);
         };
@@ -30,8 +31,14 @@ const CommentSection: React.FC = () => {
 
 
     // callback function to handle new comments
-    const handleNewComment = (newComment: string) => {
-        setComments((prevComments) => [...prevComments,{ comment: newComment}]); // adds new comment object to the list
+    const handleNewComment = (newComment: { text:string; submitted: boolean}) => {
+        setComments((prevComments) => [
+            ...prevComments,
+            { 
+            comment: newComment, 
+            User:{ display_name: "You"}, // temporary placeholder for user display name until refresh
+            }
+        ]); // adds new comment object to the list
     };
 
     return(
@@ -44,6 +51,11 @@ const CommentSection: React.FC = () => {
                             {commentObj.comment}
                         </p>
                         <span>Posted by: {commentObj.User.display_name}</span>
+                        {commentObj.Reactions.map((reaction: any, index: number) => (
+                            <img key={index} src={reaction.emoji_url} alt="Reaction" />
+
+                        ))}
+                        {/* <ReactionButton { comment_id= commentObj.comment_id}/> */}
                     </li>
                 ))}
             </ul>

@@ -49,8 +49,8 @@ const PageContent = () => {
                 <div>
                     <h1>{data.title}</h1>
                     <div>
-                        <p>Page creation: {data.created_at}</p>
-                        <p>Last updated: {data.updated_at}</p>
+                        <p>Page creation: {new Date(data.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <p>Last updated: {new Date(data.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                         <p>Page contributers:{""} 
                             {data.contributors.map((item: any, index:number) => (
                                 <span key={index}>{item.display_name}</span>
