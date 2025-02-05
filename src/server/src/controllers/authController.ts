@@ -127,6 +127,33 @@ class AuthController {
         res.status(200).json({ message: 'Logout successful' });
         return;
     };
+
+    // This method is only for testing purposes
+    setAuthLevel = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { login, auth_level, secret } = req.body;
+
+            // Check secret
+            if (secret !== process.env.ADMIN_SECRET) {
+                res.status(401).json({ error: 'Unauthorized' });
+                return;
+            }
+
+            // Check if user exists
+            const user = await Users.findOne({ where: { login } });
+            if (!user) {
+                res.status(404).json({ error: 'User not found' });
+                return;
+            }
+            // Update user's auth level
+            user.auth_level = auth_level;
+            await user.save();
+
+            res.status(200).json({ message: 'Auth level updated successfully' });
+        } catch (error) {
+            res.status(400).json({ error: 'Failed to update auth level' });
+        }
+    };
 }
 
 export default AuthController;
