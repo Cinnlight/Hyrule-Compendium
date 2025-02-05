@@ -46,7 +46,7 @@ export default function ProfileCard({ id }: { id: any }) {
             {user ? (
                 <>
                     <span className="avatar-left">[</span>
-                    <img className="avatar" src={user.avatar_url} alt={`${user.display_name}'s avatar`} />
+                    <img className="avatar" src={user.avatar_url ? user.avatar_url : "./default.gif"} alt={`${user.display_name}'s avatar`} />
                     <span className="avatar-right">]</span>
                     <h1>{user.display_name}'s Profile</h1>
                     <p>
@@ -58,17 +58,21 @@ export default function ProfileCard({ id }: { id: any }) {
                     </p>
                     <div className="userDetails">
                         <p>
-                            <span className="material-icons-round">email</span>
+                            <i className="material-icons-round">
+                                email
+                            </i>
                             Email: {user.email}
                         </p>
                         <p>
-                            <span className="material-icons-round">event</span>
+                            <i className="material-icons-round">
+                                event
+                            </i>
                             Member since: {new Date(user.created_at).toLocaleDateString()}
                         </p>
                     </div>
                 </>
             ) : (
-                <p>Loading user Profile...</p>
+                <p>Loading user profile...</p>
             )}
         </div>
     );
