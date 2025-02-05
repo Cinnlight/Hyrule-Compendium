@@ -3,8 +3,8 @@
 
 import { useState, useEffect } from 'react';
 import CommentForm from './create/createComment';
-import { usePageContext } from '../../lib/pageContext.js';
-import api from '../../lib/api.js';
+import { usePageContext } from '../../lib/pageContext';
+import api from '../../lib/api';
 
 
 const CommentSection: React.FC = () => {
