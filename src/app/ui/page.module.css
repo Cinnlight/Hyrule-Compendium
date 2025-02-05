@@ -1,5 +1,4 @@
 .page {
-
   display: grid;
   grid-template-rows: 1px 1fr 20px;
   align-items: center;
@@ -27,7 +26,7 @@
   aspect-ratio:2.91/1;
   text-align:center;
   background-size:cover;
-  min-height:200px;
+  min-height:100px;
   text-shadow: 0 0 0.8rem var(--blurple), 0 0 0.2rem var(--background), 0 0 0.5rem var(--background), 0 0 0.6rem var(--background);
   box-shadow: 0px 5px 30px var(--blurple);
 }
@@ -57,30 +56,15 @@ a.secondary {
 
 @media (max-width: 600px) {
   .page {
-    padding: 32px;
-    padding-bottom: 80px;
+    padding: 0;
   }
 
   .main {
     align-items: center;
   }
 
-  .main ol {
-    text-align: center;
-  }
-
-  .ctas {
-    flex-direction: column;
-  }
-
-  .ctas a {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 16px;
-  }
-
-  a.secondary {
-    min-width: auto;
+  .main h1 {
+    font-size: 2.5rem;
   }
 
   .footer {
