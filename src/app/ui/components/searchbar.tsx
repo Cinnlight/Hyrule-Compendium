@@ -21,6 +21,12 @@ export default function Search() {
         }
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    };
+
     return (
         <li id="searchBar">
             <input
@@ -29,6 +35,7 @@ export default function Search() {
                 placeholder="Search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}  // new handler for Enter key
             />
             <button id="navSearchButton" onClick={handleSearch}>
                 <span className="material-icons-round">search</span>
