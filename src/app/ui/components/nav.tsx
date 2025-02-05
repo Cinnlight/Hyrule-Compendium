@@ -31,16 +31,6 @@ export default function Nav() {
                         Compendium
                     </Link>
                 </li>
-                <li>
-                    <Link
-                        href="/forum"
-                    >
-                        <span className="material-icons-round">
-                            forum
-                        </span>
-                        Forum
-                    </Link>
-                </li>
                 <ConditionalRender
                     renderIfTrue={
                         <li>
