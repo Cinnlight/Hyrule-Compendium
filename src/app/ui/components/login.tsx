@@ -42,6 +42,7 @@ const Login: React.FC = () => {
             // Other actions here. (e.g. save token to localStorage an navigate to /dashboard.)
             localStorage.setItem('token', data.token);
             router.push('/dashboard');
+            router.refresh();
         } catch (err: any) {
             setError(err.message || 'An error occurred. Please try again.');
         }

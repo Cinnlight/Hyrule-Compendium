@@ -140,6 +140,22 @@ h1 {
   letter-spacing:0.1rem;
 }
 
+button {
+  background: var(--translucent-white);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font: 1rem var(--font-accent);
+  color: var(--foreground);
+  cursor: pointer;
+  transition-duration:0.5s;
+}
+
+button:hover {
+  background:var(--foreground);
+  color: var(--background)
+}
+
 @media (prefers-color-scheme: light) {
   html {
     color-scheme: light;
