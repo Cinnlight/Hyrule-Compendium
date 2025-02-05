@@ -43,9 +43,10 @@ const migrator = new Umzug({
   logger: console, // Logs migration status
 });
 
-// TODO: Change to use environment variable for reseed flag
-export async function initializeDatabase(reseed: boolean = true) {
+// Initialize the Database
+export async function initializeDatabase() {
   const dbName = process.env.DB_NAME!;
+  const reseed = process.env.DB_RESEED === 'true';
 
   try {
     // Verify database existence
