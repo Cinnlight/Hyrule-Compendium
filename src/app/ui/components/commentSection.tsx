@@ -1,25 +1,54 @@
 // ui/components/commentSection.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CommentForm from './create/createComment';
+import { usePageContext } from '../../lib/pageContext.js';
+import api from '../../lib/api.js';
+
 
 const CommentSection: React.FC = () => {
-    const [comments, setComments] = useState<string[]>([]);
+    const { selectedPageId } = usePageContext(); //get the context value
+    const [comments, setComments] = useState<any[]>([]);
 
+
+    const fetchComments = async () => {
+        try {
+            const response = await api.post('/api/comments/page', { page_id: selectedPageId });
+            setComments(response.data);
+            //console.log('Comments called by selectedPageId in <CommoneSection />:', response.data); // optional for bugfixing
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        };
+    };
+
+    useEffect(() => {
+        if (selectedPageId) {
+            fetchComments();
+        }
+    }, [selectedPageId]);
+
+
+    // callback function to handle new comments
     const handleNewComment = (newComment: string) => {
-        setComments((prevComments) => [...comments, newComment]); // adds new comment to the top of the list
+        setComments((prevComments) => [...prevComments,{ comment: newComment}]); // adds new comment object to the list
     };
 
     return(
         <div>
             <h3>Comments</h3>
-            <CommentForm page_id='1' onCommentSubmit={handleNewComment} />
             <ul>
-                {comments.map((comment, index) => (
-                    <li key={index}>{comment}</li>
+                {comments.map((commentObj, index) => (
+                    <li key={index}>
+                        <p>
+                            {commentObj.comment}
+                        </p>
+                        <span>Posted by: {commentObj.User.display_name}</span>
+                    </li>
                 ))}
             </ul>
+            {selectedPageId ? <CommentForm page_id={selectedPageId} onCommentSubmit={handleNewComment}/>: <p>No page selected</p>}
+
         </div>
     );
 };

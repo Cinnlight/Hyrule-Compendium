@@ -12,7 +12,7 @@ const PageContent = () => {
     const [error, setError] = useState<string | null>(null);
 
     const { selectedPageId } = usePageContext(); //get the context value
-     console.log('Test for selectedPageId provider:', selectedPageId); //optional for bugfixing
+    //console.log('Test for selectedPageId provider:', selectedPageId); //optional for bugfixing
 
     useEffect(() => {
         if (!selectedPageId) {
@@ -24,10 +24,10 @@ const PageContent = () => {
             setError(null);
             //console.log(`Fetching data for page ${pageId}`); // optional for bugfixing
             try {
-                console.log('Sending pageID:', selectedPageId);
+                //console.log('Sending pageID:', selectedPageId);
                 const response = await api.post(`/api/pages/info`, {pageId: selectedPageId}); //fetch data for selected page
                 setData(response.data);
-                console.log(response.data); // optional for bugfixing
+                //console.log(response.data); // optional for bugfixing
             } catch (err: any) {
                 setError('Failed to fetch page');
             } finally {
