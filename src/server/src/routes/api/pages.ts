@@ -15,5 +15,9 @@ pageRouter.post('/info', PageController.getAllPageInfo);
 // Get most recently updated page
 pageRouter.get('/recent', PageController.getMostRecentlyUpdatedPage);
 
+// Get page by fuzzy search
+pageRouter.post('/search', PageController.searchPages);
+
+
 
 export default pageRouter;
