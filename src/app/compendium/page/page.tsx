@@ -1,9 +1,9 @@
 // compendium/page/page.tsx
 'use client';
 
-import PageContent from '../../ui/components/pageContent.js';
-import { usePageContext } from '../../lib/pageContext.js';
-import CommentSection from '../../ui/components/commentSection.js';
+import PageContent from '../../ui/components/pageContent';
+import { usePageContext } from '../../lib/pageContext';
+import CommentSection from '../../ui/components/commentSection';
 
 
 const CompendiumPage = () => {
