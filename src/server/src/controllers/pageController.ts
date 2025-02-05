@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Pages, Users, Categories, ContentContributors, Comments, PageCategories, Content, Reactions } from '../models/index.js';
+import { Op } from "sequelize";
 
 class PageController {
     getAllCategories = async (req: Request, res: Response): Promise<void> => {
@@ -91,6 +92,23 @@ class PageController {
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Error fetching most recently updated page' });
+        }
+    };
+
+    searchPages = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { search } = req.body;
+            if (!search || typeof search !== "string") {
+                res.status(400).json({ message: "Search query parameter is required" });
+                return;
+            }
+            const pages = await Pages.findAll({
+                where: { title: { [Op.like]: `%${search}%` } }
+            });
+            res.json(pages);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Error searching pages" });
         }
     };
 }
