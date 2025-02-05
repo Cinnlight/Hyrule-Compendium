@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import api from '../../lib/api';
 import { useRouter } from 'next/navigation';
 import { usePageContext } from '../../lib/pageContext';
+import styles from '../../compendium/page.module.css';
 
 interface Category {
     id: string;
@@ -66,19 +67,18 @@ const CategoriesPage = () => {
     }
 
     return (
-        <div>
-            <h1>Categories</h1>
+        <div className="pages">
+            <h2>Categories</h2>
 
             {/* Display any error if it occurs */}
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
             {/* Display category buttons */}
-            <div>
+            <div className={styles.compendiumflex}>
                 {categories.map((category) => (
                     <button
                         key={category.id}
                         onClick={() => handleCategoryClick(category.id)} //pass the cateegory id here
-                        style={{ margin: '10px', padding: '10px' }}
                     >
                         {category.name}
                     </button>
@@ -86,7 +86,7 @@ const CategoriesPage = () => {
             </div>
 
             {/* Display selected category details */}
-            <div>
+            <div className={styles.compendiumflex}>
                 {selectedCategory.map((page) => (
                     <button
                         key={page.id}

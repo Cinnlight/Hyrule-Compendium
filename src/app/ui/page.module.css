@@ -18,7 +18,9 @@
 }
 
 .main h1 {
+  font-family:var(--font-accent);
   font-size: 4rem;
+  font-weight:600;
   letter-spacing: 0.1rem;
   background:url('/hero.png');
   width:100%;
@@ -45,13 +47,15 @@ a.secondary {
 .footer {
   grid-row-start: 3;
   display: flex;
-  gap: 24px;
+  flex-wrap:wrap;
+  gap:3px;
 }
 
 .footer a {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-right:24px;
 }
 
 @media (max-width: 600px) {

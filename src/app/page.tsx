@@ -8,7 +8,7 @@ export default function Home() {
         <h1>Hyrule Compendium</h1>
       </main>
       <footer className={styles.footer}>
-        FOOTER CONTENT
+        Created by <a href="https://github.com/Cinnlight/Hyrule-Compendium" target="_blank"> The Hyrule Compendium Team.</a> Nintendo, Hyrule, and Zelda are trademarks of Nintendo Co., Ltd.
       </footer>
     </div>
   );
