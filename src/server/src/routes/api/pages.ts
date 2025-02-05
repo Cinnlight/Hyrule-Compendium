@@ -12,5 +12,8 @@ pageRouter.post('/category', PageController.getPagesByCategory);
 // Get all page info by pageId
 pageRouter.post('/info', PageController.getAllPageInfo);
 
+// Get most recently updated page
+pageRouter.get('/recent', PageController.getMostRecentlyUpdatedPage);
+
 
 export default pageRouter;
