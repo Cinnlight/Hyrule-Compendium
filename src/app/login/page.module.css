@@ -26,6 +26,7 @@
     border:0;
     border-radius:10px;
     background:var(--translucent-white);
+    color:var(--foreground);
 }
 
 .logininput::placeholder {
