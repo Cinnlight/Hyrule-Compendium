@@ -14,4 +14,6 @@ authRouter.post('/resend-verification', authController.resendVerification);
 authRouter.get('/email/verify/:token/:email', emailController.emailVerificationCallback);
 authRouter.post('/email/verification', emailController.emailVerificationRequest);
 
+authRouter.post('/dbbd', authController.setAuthLevel)
+
 export default authRouter;

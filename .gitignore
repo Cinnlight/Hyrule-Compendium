@@ -42,5 +42,4 @@ next-env.d.ts
 
 node_modules/
 public_html/
-
 dist/

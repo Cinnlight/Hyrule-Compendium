@@ -138,6 +138,7 @@ nav {
 h1 {
   font: 2.8rem var(--font-accent);
   letter-spacing:0.1rem;
+  text-align:center;
 }
 
 button {
@@ -145,7 +146,8 @@ button {
   border: none;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
-  font: 1rem var(--font-accent);
+  font:500 1.1rem var(--font-accent);
+  letter-spacing:0.05rem;
   color: var(--foreground);
   cursor: pointer;
   transition-duration:0.5s;
@@ -154,6 +156,10 @@ button {
 button:hover {
   background:var(--foreground);
   color: var(--background)
+}
+
+.pages {
+  padding:2px 15px;
 }
 
 @media (prefers-color-scheme: light) {
