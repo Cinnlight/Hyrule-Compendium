@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import api from '../../../lib/api.js';
+import api from '../../../lib/api';
 
 interface ReactionButtonProps {
     comment_id: string;
