@@ -40,8 +40,6 @@ const PageContent = () => {
 
     return (
         <div>
-            <h2>PageContent</h2>
-
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
 
