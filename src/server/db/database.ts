@@ -46,7 +46,7 @@ const migrator = new Umzug({
 // Initialize the Database
 export async function initializeDatabase() {
   const dbName = process.env.DB_NAME!;
-  const reseed = process.env.DB_RESEED === 'true';
+  const forceReseed = process.env.DB_RESEED === 'true';
 
   try {
     // Verify database existence
@@ -75,12 +75,23 @@ export async function initializeDatabase() {
 
     // Sync models
     console.log("Synchronizing models...");
-    if (reseed) {
+    if (forceReseed) {
       await sequelize.sync({ force: true });
       console.log("All tables dropped and recreated.");
     } else {
       await sequelize.sync({ alter: true });
       console.log("All models synchronized.");
+    }
+
+    // Check if seeding already applied when forceReseed is false
+    if (!forceReseed) {
+      // Using 'Users' table as an example to verify if seeding happened
+      const [usersData]: any = await sequelize.query('SELECT COUNT(*) AS count FROM "Users"');
+      const count = parseInt(usersData[0].count, 10);
+      if (count > 0) {
+        console.log("Seeding already applied, skipping seeding process.");
+        return;
+      }
     }
 
     // Seed data
