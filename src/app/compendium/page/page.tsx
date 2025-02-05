@@ -4,18 +4,19 @@
 import PageContent from '../../ui/components/pageContent';
 import { usePageContext } from '../../lib/pageContext';
 import CommentSection from '../../ui/components/commentSection';
-
+import styles from '../page.module.css';
 
 const CompendiumPage = () => {
-
-    const { selectedPageId } = usePageContext(); // get the context value
-    //console.log('Test for selectedPageId provider(page route):', selectedPageId); //optional for bugfixing
+    const { selectedPageId } = usePageContext();
+    
     return (
-        <div>
-            {selectedPageId ? <PageContent />: <p>No page selected</p>}
-            <CommentSection />
+        <div className={styles.compendiumflex}>
+            <div className={styles.content}>
+                {selectedPageId ? <PageContent /> : <p>No page selected</p>}
+                <CommentSection />
+            </div>
         </div>
-    )
+    );
 }
 
 export default CompendiumPage;
