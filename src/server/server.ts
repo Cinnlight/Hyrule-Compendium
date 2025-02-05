@@ -31,16 +31,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send('Something broke!');
 });
 
+// Routes
+app.use('/', routes);
+
 // Serve static files
 app.use(express.static(path.join(__dirname, '../public_html')));
 
 // Serve index.html for all routes not handled by the API
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../public_html/index.html'));
-// });
-
-// Routes
-app.use('/', routes);
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public_html/index.html'));
+});
 
 // Initialize database and start the server
 initializeDatabase()

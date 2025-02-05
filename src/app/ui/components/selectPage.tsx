@@ -47,9 +47,9 @@ const PageContent = () => {
 
             {/* Buttons for selecting different pages */}
             <div>
-                <button onClick={() => handlePageSelection(1)}>Page 1</button>
-                <button onClick={() => handlePageSelection(2)}>Page 2</button>
-                <button onClick={() => handlePageSelection(3)}>Page 3</button>
+                <button onClick={() => handlePageSelection('1')}>Page 1</button>
+                <button onClick={() => handlePageSelection('2')}>Page 2</button>
+                <button onClick={() => handlePageSelection('3')}>Page 3</button>
             </div>
 
             {/* Conditional rendering based on the fetched content */}

@@ -2,8 +2,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import api from '../../lib/api.js';
-import { usePageContext } from '../../lib/pageContext.js';
+import api from '../../lib/api';
+import { usePageContext } from '../../lib/pageContext';
 
 
 const PageContent = () => {
