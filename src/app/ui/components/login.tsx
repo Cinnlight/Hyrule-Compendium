@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import styles from '../../login/page.module.css';
 
 const Login: React.FC = () => {
     const [display_name, setDisplayName] = useState<string>('');
@@ -51,14 +52,14 @@ const Login: React.FC = () => {
         <div>
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
-                <div className="login">
-                    <label htmlFor="displayName" className="loginlabel">
+                <div>
+                    <label htmlFor="displayName" className={styles.loginlabel}>
                         Display Name
                     </label>
                     <input
                         type="displayName"
                         id="displayName"
-                        className="loginemail"
+                        className={styles.logininput}
                         value={display_name}
                         onChange={(e) => setDisplayName(e.target.value)}
                         placeholder="Enter your Display Name"
@@ -67,13 +68,13 @@ const Login: React.FC = () => {
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="password" className="loginlabel">
+                    <label htmlFor="password" className={styles.loginlabel}>
                         Password
                     </label>
                     <input
                         type="password"
                         id="password"
-                        className="loginpassword"
+                        className={styles.logininput}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter your password"
@@ -81,7 +82,7 @@ const Login: React.FC = () => {
                     />
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit" className="loginbutton" >Login</button>
+                <button type="submit" className={styles.loginbutton} >Login</button>
             </form>
         </div>
     );
