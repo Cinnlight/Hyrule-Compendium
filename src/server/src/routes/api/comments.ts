@@ -7,7 +7,7 @@ const commentRouter = express.Router();
 commentRouter.get('/all', CommentController.getAllComments);
 
 // Get all comments for a specific page
-commentRouter.get('/page', CommentController.getCommentsByPageId);
+commentRouter.post('/page', CommentController.getCommentsByPageId);
 
 // Create a new comment
 commentRouter.post('/create', CommentController.createComment);
