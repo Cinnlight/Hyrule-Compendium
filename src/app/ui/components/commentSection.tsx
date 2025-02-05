@@ -31,8 +31,14 @@ const CommentSection: React.FC = () => {
 
 
     // callback function to handle new comments
-    const handleNewComment = (newComment: string) => {
-        setComments((prevComments) => [...prevComments,{ comment: newComment}]); // adds new comment object to the list
+    const handleNewComment = (newComment: { text:string; submitted: boolean}) => {
+        setComments((prevComments) => [
+            ...prevComments,
+            { 
+            comment: newComment, 
+            User:{ display_name: "You"}, // temporary placeholder for user display name until refresh
+            }
+        ]); // adds new comment object to the list
     };
 
     return(
