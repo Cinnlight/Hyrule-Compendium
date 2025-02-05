@@ -2,8 +2,8 @@
 'use client';
 
 import { useState, } from 'react';
-import api from '../../../lib/api.js';
-import { jwtDecode } from 'jwt-decode';
+import api from '../../../lib/api';
+// import { jwtDecode } from 'jwt-decode';
 
 interface CommentFormProps {
     page_id: string;
