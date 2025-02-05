@@ -82,6 +82,23 @@ export default function Nav() {
                         </li>
                     }
                 />
+                <ConditionalRender 
+                renderIfTrue={
+                    <li>
+                        <Link
+                            href="/logout"
+                        >
+                            <span className="material-icons-round">
+                                logout
+                            </span>
+                            Logout
+                        </Link>
+                    </li>
+                }
+                renderIfFalse={
+                    null
+                }
+            />
             </ul>
         </nav>
     )
