@@ -7,10 +7,19 @@ import { usePageContext } from '../../lib/pageContext';
 import api from '../../lib/api';
 import ReactionButton from './create/reactionButton';
 
+interface Comment {
+    comment: string;
+    User: {
+        display_name: string;
+    };
+    Reactions?: Array<{
+        emoji_url: string;
+    }>;
+}
 
 const CommentSection: React.FC = () => {
     const { selectedPageId } = usePageContext(); //get the context value
-    const [comments, setComments] = useState<any[]>([]);
+    const [comments, setComments] = useState<Comment[]>([]);
 
 
     const fetchComments = async () => {
@@ -31,12 +40,12 @@ const CommentSection: React.FC = () => {
 
 
     // callback function to handle new comments
-    const handleNewComment = (newComment: { text:string; submitted: boolean}) => {
+    const handleNewComment = (newComment: { text: string; submitted: boolean }) => {
         setComments((prevComments) => [
             ...prevComments,
-            { 
-            comment: newComment, 
-            User:{ display_name: "You"}, // temporary placeholder for user display name until refresh
+            {
+                comment: newComment.text,
+                User: { display_name: "You" }, // temporary placeholder for user display name until refresh
             }
         ]); // adds new comment object to the list
     };
@@ -50,12 +59,12 @@ const CommentSection: React.FC = () => {
                         <p>
                             {commentObj.comment}
                         </p>
-                        <span>Posted by: {commentObj.User.display_name}</span>
-                        {commentObj.Reactions.map((reaction: any, index: number) => (
-                            <img key={index} src={reaction.emoji_url} alt="Reaction" />
-
-                        ))}
-                        {/* <ReactionButton { comment_id= commentObj.comment_id}/> */}
+                        <span>Posted by: {commentObj.User?.display_name}</span>
+                        {commentObj.Reactions && commentObj.Reactions.length > 0 && 
+                            commentObj.Reactions.map((reaction: any, index: number) => (
+                                <img key={index} src={reaction.emoji_url} alt="Reaction" />
+                            ))
+                        }
                     </li>
                 ))}
             </ul>
