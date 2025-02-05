@@ -152,6 +152,10 @@ h1 {
     align-items: flex-start;
     li {
       font-size:2rem;
+
+      a {
+        font-size:1.25rem;
+      }
     }
   }
 
