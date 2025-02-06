@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from '../../login/page.module.css';
 
-const PasswordReset = () => {
+const PasswordResetForm = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
@@ -77,6 +77,15 @@ const PasswordReset = () => {
                 </button>
             </form>
         </div>
+    );
+};
+
+// Wrap the form component with Suspense
+const PasswordReset = () => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <PasswordResetForm />
+        </Suspense>
     );
 };
 
