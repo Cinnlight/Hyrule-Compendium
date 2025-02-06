@@ -15,6 +15,9 @@ pageRouter.post('/info', PageController.getAllPageInfo);
 // Get page by fuzzy search
 pageRouter.post('/search', PageController.searchPages);
 
+// Update page content
+pageRouter.patch('/update', PageController.updatePageContent);
+
 
 
 export default pageRouter;
