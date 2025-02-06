@@ -44,9 +44,22 @@ const CommentSection: React.FC = () => {
     const fetchComments = async () => {
         try {
             const response = await api.post('/api/comments/page', { page_id: selectedPageId });
-            setComments(response.data);
-             //console.log(selectedPageId); //optional for debugging
-             //console.log(response.data); //optional for debugging
+            const fetchedComments: Comment[] = response.data.map((comment: any) => ({
+                id: comment.id,
+                comment: comment.comment,
+                User: {
+                    display_name: comment.User.display_name,
+                },
+                Reactions: comment.Reactions?.map((reaction: any) => ({
+                    id: reaction.id,
+                    reaction_id: reaction.reaction_id,
+                    emoji_url: reaction.emoji_url,
+                    CommentReactions: {
+                        count: reaction.CommentReactions?.count || 0,
+                    },
+                })) || [],
+            }));
+            setComments(fetchedComments);
         } catch (error) {
             console.error('Error fetching comments:', error);
         }
@@ -82,13 +95,41 @@ const CommentSection: React.FC = () => {
         ]);
     };
 
-    const updateReactions = (commentId: string, newReactions: any) => {
-        setComments((prevComments) => 
-            prevComments.map((comment) => 
-                comment.id === commentId 
-                ? { ...comment, Reactions: newReactions}
-                : comment
-            )
+    const updateReactions = (commentId: string, newReaction: any, countUpdate: number) => {
+        setComments((prevComments) =>
+            prevComments.map((comment) => {
+                if (comment.id !== commentId) return comment;
+    
+                // Ensure Reactions is always an array
+                const reactions = comment.Reactions || [];
+                const existingIndex = reactions.findIndex(
+                    (r) => r.reaction_id === newReaction.reaction_id
+                );
+    
+                if (existingIndex >= 0) {
+                    // Update existing reaction
+                    const updatedReactions = [...reactions];
+                    updatedReactions[existingIndex] = {
+                        ...updatedReactions[existingIndex],
+                        CommentReactions: { count: countUpdate },
+                    };
+                    return { ...comment, Reactions: updatedReactions };
+                } else {
+                    // Add new reaction
+                    return {
+                        ...comment,
+                        Reactions: [
+                            ...reactions,
+                            {
+                                id: newReaction.id,
+                                reaction_id: newReaction.reaction_id,
+                                emoji_url: newReaction.emoji_url,
+                                CommentReactions: { count: countUpdate },
+                            },
+                        ],
+                    };
+                }
+            })
         );
     };
 
@@ -102,7 +143,7 @@ const CommentSection: React.FC = () => {
                         <small>Posted by: {commentObj.User?.display_name}</small>
                         <div>
                             {ALL_REACTIONS.map((reaction) => {
-                                const existingReaction = commentObj.Reactions?.find((r) => r.reaction_id === reaction.reaction_id);
+                                const existingReaction = (commentObj.Reactions || []).find((r) => r.reaction_id === reaction.reaction_id);
                                 return (
                                     <ReactionButton 
                                         key={reaction.reaction_id}
@@ -113,7 +154,7 @@ const CommentSection: React.FC = () => {
                                         }}
                                         user_id={userId}
                                         count={existingReaction?.CommentReactions.count || 0}
-                                        updateReactions={(newReactions) => updateReactions(commentObj.id, newReactions)}
+                                        updateReactions={updateReactions}
                                     />
                                 );
                             })}
