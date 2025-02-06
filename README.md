@@ -6,6 +6,9 @@ An interactive wiki platform dedicated to The Legend of Zelda™, featuring user
 
 The Hyrule Compendium is a full-stack web application that serves as a comprehensive knowledge base for The Legend of Zelda™ fans. With tiered user permissions, email verification, and content moderation features, it creates a secure and engaging environment for community contributions.
 
+## Live Site
+[Hyrule Compendium](https://hyrule-compendium.magicapps.dev/)
+
 ## Features
 
 ### User Authentication
