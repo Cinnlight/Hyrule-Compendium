@@ -11,6 +11,7 @@ interface UserAttributes {
     auth_level: number;
     email_val?: boolean;
     email_val_key?: string | null;
+    reset_key?: string | null;
     created_at?: Date;
     updated_at?: Date;
     avatar_url?: string;
@@ -29,6 +30,7 @@ export class Users extends Model<UserAttributes, UserCreationAttributes> impleme
     declare auth_level: number;
     declare email_val: boolean;
     declare email_val_key: string | null;
+    declare reset_key: string | null;
     declare avatar_url: string;
 }
 
@@ -79,6 +81,10 @@ export function UserFactory(sequelize: Sequelize): typeof Users {
                 defaultValue: false,
             },
             email_val_key: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
+            reset_key: {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
