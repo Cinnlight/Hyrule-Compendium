@@ -10,6 +10,8 @@ const PageContent = () => {
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [editedContent, setEditedContent] = useState<string>('');
 
     const { selectedPageId } = usePageContext();
 
@@ -34,6 +36,45 @@ const PageContent = () => {
         fetchData();
     }, [selectedPageId]);
 
+    const handleEditClick = () => {
+        //initialize the editedContent with the current page content when entering edit mode
+        if (data?.contents.length > 0) {
+            setEditedContent(data.contents[0].content);
+        }
+        setIsEditing(true); // enter editting mode
+    }
+
+    const handleSaveClick = async () => {
+        if (!data || !selectedPageId) return;
+
+        try {
+            const response = await api.post('/api/pages/update', {
+                pageId: selectedPageId,
+                content: editedContent,
+            });
+
+            if (response.status === 200) {
+                //update local state with the new content
+                setData((prevData: any) => ({
+                    ...prevData,
+                    contents: [{ ...prevData.contents[0], content: editedContent }],
+                }));
+                setIsEditing(false); //exit editting mode 
+            }
+        } catch (err: any) {
+            console.error('Failed to update page content:', err);
+            setError('Failed to update page content');
+        }
+    };
+
+    const handleCancelClick = () => {
+        setIsEditing(false); //exit editting mode
+        //reset editContent to the original content
+        if (data?.contents.length > 0) {
+            setEditedContent(data.contents[0].content);
+        }
+    }
+
     return (
         <div>
             {loading && <p>Loading...</p>}
@@ -53,10 +94,28 @@ const PageContent = () => {
                     </div>
                     <div className={styles.contents}>
                         <section>
-                            {data.contents.map((contentItem: any, index: number) => (
-                                <p key={index}>{contentItem.content}</p>
-                            ))}
+                            {isEditing ? (
+                                    // display editable textarea in editting mode
+                                    <textarea
+                                    value={editedContent}
+                                    onChange={(e) => setEditedContent(e.target.value)}
+                                    rows={10}
+                                    style={{ width: '100%' }}
+                                    />
+                            ) :(
+                                <p>{data.contents[0].content}</p>
+                            )}
                         </section>
+                    </div>
+                    <div>
+                        {isEditing ? (
+                            <>
+                                <button onClick={handleSaveClick}>Save</button>
+                                <button onClick={handleCancelClick}>Cancel</button>
+                            </>
+                        ) : (
+                            <button onClick={handleEditClick}>Edit</button>
+                        )}
                     </div>
                 </div>
             )}
