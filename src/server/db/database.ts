@@ -76,6 +76,8 @@ export async function initializeDatabase() {
     // Sync models
     console.log("Synchronizing models...");
     if (forceReseed) {
+      // Force deletion of all tables
+      await sequelize.drop();
       await sequelize.sync({ force: true });
       console.log("All tables dropped and recreated.");
     } else {
