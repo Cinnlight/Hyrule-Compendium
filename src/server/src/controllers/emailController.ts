@@ -12,10 +12,9 @@ class EmailController {
 
     emailVerificationCallback = async (req: Request, res: Response): Promise<void> => {
         const token = req.params.token as string;
-        const email = req.params.email as string;
         const BASE_URL = process.env.NODE_ENV === 'production' ? process.env.APP_URL as string : 'http://localhost:3000';
 
-        if (!token || !email) {
+        if (!token) {
             res.status(400).json({
                 success: false,
                 message: 'Verification Error'
@@ -24,14 +23,9 @@ class EmailController {
         }
 
         try {
-            const user = await Users.findOne({ where: { email } });
+            const user = await Users.findOne({ where: { email_val_key: token } });
 
             if (!user) {
-                res.redirect(BASE_URL);
-                return;
-            }
-
-            if (user.email_val_key !== token) {
                 res.redirect(BASE_URL);
                 return;
             }
