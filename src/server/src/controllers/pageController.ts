@@ -158,6 +158,26 @@ class PageController {
             res.status(500).json({ message: "Error searching pages" });
         }
     };
+
+    updatePageContent = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { pageId, content } = req.body;
+            if (!pageId || !content) {
+                res.status(400).json({ message: "Both pageId and content are required" });
+                return;
+            }
+            const page = await Pages.findOne({ where: { id: pageId } });
+            if (!page) {
+                res.status(404).json({ message: "Page not found" });
+                return;
+            }
+            await Content.update({ content }, { where: { page_id: pageId } });
+            res.json({ message: "Content updated successfully" });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Error updating page content" });
+        }
+    };
 }
 
 export default new PageController();
