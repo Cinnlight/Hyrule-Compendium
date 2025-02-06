@@ -120,6 +120,52 @@ class AuthController {
         return;
     };
 
+    requestPasswordReset = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { email } = req.body;
+            
+            // Find user to get display_name
+            const user = await Users.findOne({ where: { email }});
+            
+            // Create UserData object with required fields
+            const userData = {
+                email,
+                display_name: user!.display_name
+            };
+            
+            const result = await this.emailController.emailService.sendPasswordReset(userData);
+            res.json(result);
+        } catch (error) {
+            res.status(500).json({ success: false, error: 'Failed to request password reset' });
+        }
+    };
+    
+    updatePassword = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { token, password } = req.body;
+            
+            // Find user with this reset token
+            const user = await Users.findOne({ where: { reset_key: token }});
+            if (!user) {
+                res.status(400).json({ success: false, error: 'Invalid or expired reset token' });
+                return;
+            }
+    
+            // Hash new password
+            const hashedPassword = await bcrypt.hash(password, 10);
+            
+            // Update password and clear reset token
+            await user.update({
+                password: hashedPassword,
+                reset_key: null
+            });
+    
+            res.json({ success: true, message: 'Password updated successfully' });
+        } catch (error) {
+            res.status(500).json({ success: false, error: 'Failed to update password' });
+        }
+    };
+
     logout = async (req: Request, res: Response): Promise<void> => {
         // Invalidate the user's session or token
         // Since JWTs are stateless, you can handle this on the client side by simply deleting the token

@@ -45,6 +45,36 @@ class EmailController {
         }
     };
 
+    emailResetCallback = async (req: Request, res: Response): Promise<void> => {
+        const token = req.params.token as string;
+        const BASE_URL = process.env.NODE_ENV === 'production' ? process.env.APP_URL as string : 'http://localhost:3000';
+
+        if (!token) {
+            res.status(400).json({
+                success: false,
+                message: 'Reset Error'
+            });
+            return;
+        }
+
+        try {
+            const user = await Users.findOne({ where: { reset_key: token } });
+
+            if (!user) {
+                res.redirect(BASE_URL);
+                return;
+            }
+            
+            res.redirect(`${BASE_URL}/reset-password?token=${token}`);
+            return;
+
+        } catch (error: any) {
+            console.error('Email reset error:', error);
+            res.redirect(BASE_URL);
+            return;
+        }
+    }
+
     emailVerificationRequest = async (req: Request, res: Response): Promise<void> => {
         try {
             const { user } = req.body;
