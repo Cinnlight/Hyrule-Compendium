@@ -52,6 +52,28 @@ The Hyrule Compendium is a full-stack web application that serves as a comprehen
 - Reactions
 - Page Categories
 
+## Screenshots
+
+### Homepage with Latest Updates
+![Homepage](screenshots/home_ss.png)
+
+### Login View 
+![Compendium Categories](screenshots/login_ss.png)
+
+### Register View
+![Mobile View](screenshots/register_ss.png)
+
+### User Dashboard
+![Dashboard](screenshots/profile_ss.png)
+
+### Article View with Comments
+![Article View](screenshots/page_ss.png)
+
+### Email Examples
+![Verify](screenshots/verify_ss.png)
+![Reset](screenshots/reset_ss.png)
+
+
 ## Team
 - [Kat](https://github.com/dauntss)
 - [Hailey](https://github.com/Cinnlight)
