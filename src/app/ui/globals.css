@@ -133,6 +133,7 @@ nav {
                  0 0 0.5rem var(--foreground),
                  0 0 0.6rem var(--foreground);
   }
+  z-index: 99;
 }
 
 h1 {
