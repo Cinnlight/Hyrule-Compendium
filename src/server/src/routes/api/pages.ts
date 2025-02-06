@@ -12,9 +12,6 @@ pageRouter.post('/category', PageController.getPagesByCategory);
 // Get all page info by pageId
 pageRouter.post('/info', PageController.getAllPageInfo);
 
-// Get most recently updated page
-pageRouter.get('/recent', PageController.getMostRecentlyUpdatedPage);
-
 // Get page by fuzzy search
 pageRouter.post('/search', PageController.searchPages);
 

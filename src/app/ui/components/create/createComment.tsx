@@ -75,20 +75,22 @@ const CommentForm: React.FC<CommentFormProps> = ({ page_id, onCommentSubmit}) =>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='commentText'>Add a Comment</label>
                 {!isSubmitted ? (
-                    <div>
-                        <textarea
-                            id='commentText'
-                            rows={4}
-                            cols={50}
-                            value={commentText}
-                            onChange={handleInputChange}
-                            placeholder='Type your comment here...'
-                            disabled={isLoading}
-                        />
+                    <>
+                        <div>
+                            <textarea
+                                id='commentText'
+                                rows={4}
+                                cols={50}
+                                value={commentText}
+                                onChange={handleInputChange}
+                                placeholder='Type your comment here...'
+                                disabled={isLoading}
+                            />
+                        </div>
                         <button type='submit' disabled={isLoading}>
                             {isLoading ? 'Submitting...' : 'Submit Comment'}
                         </button>
-                    </div>
+                    </>
                 ) : (
                     <p style={{ color: 'green' }}>Comment submitted successfully!</p>
                 )}

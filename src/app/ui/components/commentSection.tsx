@@ -6,6 +6,7 @@ import CommentForm from './create/createComment';
 import { usePageContext } from '../../lib/pageContext';
 import api from '../../lib/api';
 import ReactionButton from './create/reactionButton';
+import styles from '../page.module.css';
 
 interface Comment {
     comment: string;
@@ -18,18 +19,16 @@ interface Comment {
 }
 
 const CommentSection: React.FC = () => {
-    const { selectedPageId } = usePageContext(); //get the context value
+    const { selectedPageId } = usePageContext();
     const [comments, setComments] = useState<Comment[]>([]);
-
 
     const fetchComments = async () => {
         try {
             const response = await api.post('/api/comments/page', { page_id: selectedPageId });
             setComments(response.data);
-            console.log('Comments called by selectedPageId in <CommentSection />:', response.data); // optional for bugfixing
         } catch (error) {
             console.error('Error fetching comments:', error);
-        };
+        }
     };
 
     useEffect(() => {
@@ -38,38 +37,38 @@ const CommentSection: React.FC = () => {
         }
     }, [selectedPageId]);
 
-
-    // callback function to handle new comments
     const handleNewComment = (newComment: { text: string; submitted: boolean }) => {
         setComments((prevComments) => [
             ...prevComments,
             {
                 comment: newComment.text,
-                User: { display_name: "You" }, // temporary placeholder for user display name until refresh
+                User: { display_name: "You" },
             }
-        ]); // adds new comment object to the list
+        ]);
     };
 
-    return(
-        <div>
-            <h3>Comments</h3>
+    return (
+        <div className={styles.comments}>
+            <h2>Comments</h2>
             <ul>
                 {comments.map((commentObj, index) => (
-                    <li key={index}>
-                        <p>
-                            {commentObj.comment}
-                        </p>
-                        <span>Posted by: {commentObj.User?.display_name}</span>
-                        {commentObj.Reactions && commentObj.Reactions.length > 0 && 
-                            commentObj.Reactions.map((reaction: any, index: number) => (
-                                <img key={index} src={reaction.emoji_url} alt="Reaction" />
-                            ))
-                        }
+                    <li key={index} className={styles.comment}>
+                        <p>{commentObj.comment}</p>
+                        <small>Posted by: {commentObj.User?.display_name}</small>
+                        {commentObj.Reactions && commentObj.Reactions.length > 0 && (
+                            <div>
+                                {commentObj.Reactions.map((reaction: any, index: number) => (
+                                    <img key={index} src={reaction.emoji_url} alt="Reaction" />
+                                ))}
+                            </div>
+                        )}
                     </li>
                 ))}
             </ul>
-            {selectedPageId ? <CommentForm page_id={selectedPageId} onCommentSubmit={handleNewComment}/>: <p>No page selected</p>}
-
+            {selectedPageId ? 
+                <CommentForm page_id={selectedPageId} onCommentSubmit={handleNewComment}/> 
+                : <p>No page selected</p>
+            }
         </div>
     );
 };

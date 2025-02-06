@@ -43,8 +43,9 @@ CommentReactionsFactory(sequelize);
 // Associations
 Pages.belongsTo(Users, { foreignKey: 'created_by' });
 
-// Comment to Page Relationship
+// Comment to Page Relationship (bi-directional)
 Comments.belongsTo(Pages, { foreignKey: 'page_id', onDelete: 'CASCADE' });
+Pages.hasMany(Comments, { foreignKey: 'page_id' });
 // Comment to User Relationship
 Comments.belongsTo(Users, { foreignKey: 'user_id' });
 
