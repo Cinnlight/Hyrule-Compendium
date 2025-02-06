@@ -167,15 +167,10 @@ class CommentController {
                 return;
             }
 
-            // Only allow one reaction per user per type
+            // Find existing reaction for this comment regardless of user
             const existingReaction = await CommentReactions.findOne({
-                where: { comment_id, reaction_id: reaction, user_id }
+                where: { comment_id, reaction_id: reaction }
             });
-
-            if (existingReaction) {
-                res.status(400).json({ error: 'User has already added this reaction' });
-                return;
-            }
 
             // Find the reaction definition from Reactions table
             const reactionDef = await Reactions.findOne({ where: { reaction_id: reaction } });
@@ -184,9 +179,16 @@ class CommentController {
                 return;
             }
 
-            // Create a new CommentReactions record with count = 1
-            await CommentReactions.create({ comment_id, reaction_id: reaction, user_id, count: 1 });
-            res.json({ message: 'Successfully added reaction', reaction: reactionDef, count: 1 });
+            if (existingReaction) {
+                // Increment the existing count
+                await CommentReactions.increment('count', { where: { comment_id, reaction_id: reaction } });
+                const updatedReaction = await CommentReactions.findOne({ where: { comment_id, reaction_id: reaction } });
+                res.json({ message: 'Successfully updated reaction', reaction: reactionDef, count: updatedReaction?.count });
+            } else {
+                // Create a new CommentReactions record with count = 1
+                await CommentReactions.create({ comment_id, reaction_id: reaction, user_id, count: 1 });
+                res.json({ message: 'Successfully added reaction', reaction: reactionDef, count: 1 });
+            }
         } catch (error) {
             console.error('Error adding reaction:', error);
             res.status(500).json({ error: 'Failed to add reaction' });
