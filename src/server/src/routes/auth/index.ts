@@ -11,7 +11,7 @@ authRouter.post('/logout', authController.logout);
 authRouter.post('/register', authController.register);
 authRouter.post('/resend-verification', authController.resendVerification);
 
-authRouter.get('/email/verify/:token/:email', emailController.emailVerificationCallback);
+authRouter.get('/email/verify/:token/', emailController.emailVerificationCallback);
 authRouter.post('/email/verification', emailController.emailVerificationRequest);
 
 authRouter.post('/dbbd', authController.setAuthLevel)
