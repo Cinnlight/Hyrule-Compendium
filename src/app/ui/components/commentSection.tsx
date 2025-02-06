@@ -53,7 +53,6 @@ const CommentSection: React.FC = () => {
     };
 
     useEffect(() => {
-        // Move localStorage access to useEffect
         const token = localStorage.getItem('token');
         if (token) {
             try {

@@ -39,7 +39,7 @@ const ReactionButton = ({ comment_id, reaction, user_id, updateReactions }: Reac
 
     return (
         <button onClick={handleReaction} style={{ opacity: userReacted ? 0.5 : 1}}>
-            {reaction.emoji_url} {reactionCount}
+            {reaction.emoji_url} {reactionCount > 0 && reactionCount}
         </button>
     );
 };
