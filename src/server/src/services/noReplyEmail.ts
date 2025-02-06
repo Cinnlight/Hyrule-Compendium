@@ -60,7 +60,7 @@ export class EmailService {
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; text-align: center;">
             <h1>Welcome to Hyrule Compendium, ${user.display_name}!</h1>
             <p>Please verify your email by clicking the link below:</p>
-            <a href="${appUrl}/auth/email/verify/${validationToken}/${user.email}"
+            <a href="${appUrl}/auth/email/verify/${validationToken}"
               style="display: inline-block;
                   padding: 10px 20px;
                   background-color:rgb(96, 29, 160);
