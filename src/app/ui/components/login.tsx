@@ -5,7 +5,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../login/page.module.css';
 
-const Login: React.FC = () => {
+interface LoginProps {
+    onResetClick: () => void;
+}
+
+const Login: React.FC<LoginProps> = ({ onResetClick }) => {
     const [display_name, setDisplayName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
@@ -48,6 +52,7 @@ const Login: React.FC = () => {
             setError(err.message || 'An error occurred. Please try again.');
         }
     };
+
     return (
         <div>
             <h1>Login</h1>
@@ -83,6 +88,13 @@ const Login: React.FC = () => {
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <button type="submit" className={styles.loginbutton} >Login</button>
+                <button 
+                    type="button" 
+                    onClick={onResetClick}
+                    className={styles.loginbutton}
+                >
+                    Forgot Password?
+                </button>
             </form>
         </div>
     );
