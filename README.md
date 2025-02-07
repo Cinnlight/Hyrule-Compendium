@@ -40,7 +40,6 @@ The Hyrule Compendium is a full-stack web application that serves as a comprehen
 ### Backend
 - **Node.js** with **Express** - Server framework
 - **PostgreSQL** - Relational database
-- **Clerk** - Authentication and user management
 - **Sequelize** - ORM for database operations
 
 ## Database Schema
